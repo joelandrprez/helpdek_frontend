@@ -1,0 +1,54 @@
+<!-- <p>sidebar works!</p>
+
+<li *ngFor="let item of menuService.menu">
+
+    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="true">
+        <i [class]="item.icono"></i>
+        <span class="hide-menu">{{item.titulo}} <span class="label label-rouded label-themecolor pull-right">{{item.submenu.len}}</span></span>
+    </a>
+
+    <ul aria-expanded="true" class="collapse">
+        <li *ngFor="let subMenuitem of item.submenu">
+            <a [routerLink]="subMenuitem.url">{{subMenuitem.titulo}}</a>
+        </li>
+    </ul>
+
+</li> -->
+
+
+ <nav class="sidebar sidebar-offcanvas" id="sidebar">
+    <ul class="nav">
+      <li class="nav-item sidebar-category">
+        <p>Navigation</p>
+        <span></span>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink='/dashboard'>
+          <i class="mdi mdi-view-quilt menu-icon"></i>
+          <span class="menu-title"><a class="nav-link" routerLink='/dashboard'>Dashboard</a></span>
+        </a>
+      </li>
+      <li class="nav-item sidebar-category">
+        <p>Components</p>
+        <span></span>
+      </li>
+        <li class="nav-item" *ngFor="let item of menuService.menu">
+
+            <a class="nav-link" data-toggle="collapse" href="#{{item.titulo}}" aria-expanded="false" aria-controls="ui-basic">
+              <i [class]="item.icono" class="mdi mdi-folder-outline menu-icon"></i>
+              <span class="menu-title">{{item.titulo}}</span>
+              <i class="menu-arrow"></i>
+            </a>
+
+            <div class="collapse" id="{{item.titulo}}">
+              <ul class="nav flex-column sub-menu" *ngFor="let subMenuitem of item.submenu">
+
+                <li class="nav-item"> <a class="nav-link" [routerLink]="subMenuitem.url">{{subMenuitem.titulo}}</a></li>
+                
+              </ul>
+            </div>
+          </li>
+    </ul>
+</nav>
+
+

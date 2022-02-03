@@ -1,0 +1,30 @@
+<div class="wrapper fadeInDown">
+        <div id="formContent">
+                <!-- Tabs Titles -->
+                <h2 class="active"> Bienvenido </h2>
+
+                <!-- Icon -->
+                <div class="fadeIn first">
+                        <img src="../../../assets/img/20079.png" id="icon" alt="User Icon" />
+                </div>
+
+                <!-- Login Form -->
+                <form [formGroup]="loginForm" (ngSubmit)="login()">
+
+                        <input type="text" id="login" formControlName="ccorusu" class="fadeIn second" name="login"
+                                placeholder="Correo">
+
+                        <input type="password" formControlName="cpaswor" id="password" class="fadeIn third" name="login"
+                                placeholder="Password"><br><br>
+
+                        <input type="submit" class="focus" value="INGRESAR">
+
+                </form>
+
+                <!-- Remind Passowrd -->
+                <div id="formFooter">
+                        <a class="underlineHover" routerLink="/recuperacion">Recuperar Contraseña</a>
+                </div>
+
+        </div>
+</div>

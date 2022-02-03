@@ -1,0 +1,127 @@
+
+
+
+<div class="content-wrapper">
+
+        <div class="row">
+                <div class="col-12 col-xl-12 grid-margin stretch-card">
+                        <div class="row w-100 flex-grow">
+                                <div class="col-md-6 grid-margin stretch-card">
+                                        <div class="card">
+
+                                                <div class="card-body">
+                                                        <h4 class="card-title">Datos de usuario</h4>
+                                                        <p class="card-description">
+                                                          Validar la informacion
+                                                        </p>
+                                                        <form class="forms-sample" [formGroup]="perfilForm" (submit)="actualizarPerfil()">
+                                                          <div class="form-group">
+                                                            <div class="row">
+                                                              <div class="col-md-6">
+                                                                <label for="exampleInputUsername1">Nombres</label>
+                                                                <input type="text" class="form-control bordercustom"  formControlName="nombre">
+                                                              </div>
+                                                              <div class="col-md-6">
+                                                                <label for="exampleInputUsername1">Apellidos</label>
+                                                                <input type="text" class="form-control bordercustom"  formControlName="nombre">
+                                                              </div>
+
+                                                            </div>
+                                                          </div>
+
+
+                                                          <div class="form-group">
+                                                            <div class="row">
+                                                              <div class="col-md-6">
+                                                                <label for="exampleInputEmail1">Correo</label>
+                                                            <input type="email" [readonly]="true" class="form-control bordercustom" id="exampleInputEmail1" formControlName="email">
+                                                              </div>
+                                                              <div class="col-md-6">
+                                                                <label for="exampleInputUsername1">Nro de documento</label>
+                                                                <input type="text" class="form-control bordercustom"  formControlName="nombre">
+                                                              </div>
+
+                                                            </div>
+                                                          </div>
+
+
+                                                          <!-- <div class="form-group">
+                                                            <label>Categoria </label>
+  
+                                                              <select 
+                                                                formControlName="categoria" [attr.disabled]="utDisabled"
+                                                                class="form-control form-control-sm bordercustom">
+                                                                <option value="ADM">Administrador</option>
+                                                                <option value="CLI">Cliente</option>
+                                                                <option value="ATE">Atencion al cliente</option>
+                                                                <option value="DES">Desarrollo</option>
+                                                              </select>
+                                                            
+                                                          </div> -->
+
+
+                                                          
+                                                          <div class="form-group">
+                                                            <label for="exampleInputPassword1">Direccion</label>
+                                                            <input type="text" class="form-control bordercustom" id="exampleInputPassword1" formControlName="direccion">
+                                                          </div>
+                                                          
+
+                                                          <!-- <div class="form-group">
+                                                            <label>Estado </label>
+  
+                                                              <select 
+                                                                formControlName="estado" [attr.disabled]="utDisabled"
+                                                                class="form-control form-control-sm bordercustom">
+                                                                <option value="true">Activo</option>
+                                                                <option value="false">Inactivo</option>
+                                                              </select>
+                                                            
+                                                          </div> -->
+
+
+
+                                                          <div class="form-group">
+                                                          <label>Sexo o Empresa </label>
+
+                                                            <select 
+                                                              formControlName="sexo"
+                                                              class="form-control form-control-sm bordercustom">
+                                                              <option value="H">Hombre</option>
+                                                              <option value="M">Mujer</option>
+                                                              <option value="E">Empresa</option>
+                                                            </select>
+                                                          
+                                                          </div>
+
+
+                                                          <div class="form-group">
+                                                            <label for="exampleInputPassword1">Fecha de Nacimiento</label>
+                                                            <input type="text" class="form-control bordercustom" id="exampleInputPassword1" formControlName="dfecnac">
+                                                          </div>
+
+
+
+                                                          <button type="submit" class="btn btn-primary mr-2">Actualizar</button>
+                                                          <button class="btn btn-light">Salir</button>
+                                                        </form>
+                                                      </div>
+                                        </div>
+                                </div>
+                                <div class="col-md-6 grid-margin stretch-card">
+                                        <div class="card">
+
+                                                <div class="card-body">
+                                                        <h4 class="card-title">Avatar</h4>
+                                                        <p class="card-description">
+                                                          Imagen de usuario
+                                                        </p>
+
+                                                      </div>
+                                        </div>
+                                </div>
+                        </div>
+                </div>
+
+        </div>
+</div>

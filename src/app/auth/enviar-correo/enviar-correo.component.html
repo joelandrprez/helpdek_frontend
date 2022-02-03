@@ -1,0 +1,19 @@
+
+
+<div class="wrapper fadeInDown">
+        <div id="formContent">
+                <!-- Tabs Titles -->
+                <h2 class="active"> Recuperacion de Cuenta </h2>
+
+                <!-- Login Form -->
+                <form [formGroup]="recuperacionForm"
+                (ngSubmit)="enviarCorreo()">
+
+                        <input type="text" id="login" formControlName="ccorusu" class="fadeIn second" name="login"
+                                placeholder="Correo">
+                        <input type="submit" class="focus" value="ENVIAR CORREO">          
+               </form>
+
+
+        </div>
+</div>
