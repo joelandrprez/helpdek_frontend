@@ -24,7 +24,7 @@
       </li>
       <li class="nav-item">
         <a class="nav-link" routerLink='/dashboard'>
-          <i class="mdi mdi-view-quilt menu-icon"></i>
+          <i class="mdi mdi-view-quilt menu-icon" aria-hidden="true"></i>
           <span class="menu-title"><a class="nav-link" routerLink='/dashboard'>Dashboard</a></span>
         </a>
       </li>
@@ -35,9 +35,9 @@
         <li class="nav-item" *ngFor="let item of menuService.menu">
 
             <a class="nav-link" data-toggle="collapse" href="#{{item.titulo}}" aria-expanded="false" aria-controls="ui-basic">
-              <i [class]="item.icono" class="mdi mdi-folder-outline menu-icon"></i>
+              <i [class]="item.icono" class="mdi mdi-folder-outline menu-icon" aria-hidden="true"></i>
               <span class="menu-title">{{item.titulo}}</span>
-              <i class="menu-arrow"></i>
+              <i class="menu-arrow" aria-hidden="true"></i>
             </a>
 
             <div class="collapse" id="{{item.titulo}}">
