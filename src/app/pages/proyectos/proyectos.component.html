@@ -1,131 +1,192 @@
 <div class="content-wrapper">
 
-    <div class="row">
-            <div class="col-12 col-xl-12 grid-margin stretch-card">
-                    <div class="row w-100 flex-grow">
-                            <div class="col-md-12 grid-margin stretch-card">
-                                    <div class="card">
-                                            <div class="card-body">
-                                                    <h4 class="card-title">Mantenimiento de Proyectos</h4>
-                                                    <br>
-                                                          
-<<<<<<< HEAD
-                                                          <button type="button" class="btn btn-success btn-icon-text" (click)="abrilModal()">
-                                                                  <i class="mdi mdi-alert mdi-file-plus"></i>                                                    
-=======
-                                                          <button type="button" class="btn btn-success btn-icon-text">
-                                                                  <i class="mdi mdi-alert mdi-file-plus" aria-hidden="true"></i>                                                    
->>>>>>> 00f0576a306209a2bd010f42782b78adddc9537f
-                                                                  Agregar Proyecto
-                                                          </button>
-          
-          
-                                                          <input type="text" class="form-control" style="float: right; width: 200px;" id="exampleInputUsername1" placeholder="buscar Proyecto">
-                                                    <br>
-                                                    <div class="row">
-                                                            <div class="col-md-12">
-                                                                    <div class="table-responsive">
-                                                                            <table aria-describedby="myTable" class="table table-striped">
-                                                                                    <thead>
-                                                                                      <tr>
-                                                                                        <th scope="col">
-                                                                                          Nombre
-                                                                                        </th>
-                                                                                        <th scope="col">
-                                                                                          Cliente
-                                                                                        </th>
-                                                                                        <th scope="col">
-                                                                                          Descripcion
-                                                                                        </th>                                                 
-                                                                                        <th scope="col">
-                                                                                          Estado
-                                                                                        </th>
-                                                                                        <th scope="col">  
-                                                                                        </th>                                           
-                                                                                      </tr>
-                                                                                    </thead>
-                                                                                    <tbody>
-                                                                                      <tr *ngFor="let proyecto of proyectos">
-                                                                                             
-                                                                                              <td class="py-1">
-                                                                                                     {{proyecto.cnompro}}
-                                                                                              </td>
-                                                                                              <td>
-                                                                                                     {{proyecto.ccodcli.cnomusu}}
-                                                                                              </td>
-                                                                                              <td>
-                                                                                                      {{proyecto.cdescri}}
-                                                                                              </td>
-                                                                                              <td>
-                                                                                                       {{proyecto.cestado}}
-                                                                                              </td>
+        <div class="row">
+                <div class="col-12 col-xl-12 grid-margin stretch-card">
+                        <div class="row w-100 flex-grow">
+                                <div class="col-md-12 grid-margin stretch-card">
+                                        <div class="card">
+                                                <div class="card-body">
+                                                        <h4 class="card-title">Mantenimiento de Proyectos</h4>
+                                                        <br>
 
-                                                                                            </tr>
-                                                                                    </tbody>
-                                                                                  </table>
-                                                                    </div>
-                                                                    <div class="modal animated fadeIn" id="modal-lg" style="padding-right: 17px;" aria-modal="true" [ngClass]="show" [ngStyle]="{'display':colorEstado}"
-                                                                    role="dialog">
-                                                                    <div class="modal-dialog modal-lg">
-                                                                        <div class="modal-content">
-                                                                            <div class="modal-header">
-                                                                                <h4 class="modal-title">Registro Proyecto</h4>
-                                                                                <button (click)="cerrarModal()" type="button" class="close"
-                                                                                    data-dismiss="modal" aria-label="Close">
-                                                                                    <span aria-hidden="true">×</span>
-                                                                                </button>
-                                                                            </div>
-                                                                            <div class="modal-bodyCan"> 
-                                                                                <div class="card-body">
-                                                                                        <form class="forms-sample" [formGroup]="proyectoRegistro!" (ngSubmit)="guardarProyecto()">
-                                                                                          <div class="form-group row">
-                                                                                                <label class="col-sm-3 col-form-label ">Asunto</label>
-                                                                                                <div class="col-sm-9">
-                                                                                                  <input type="text" class="form-control bordercustom" placeholder="Asunto" formControlName="cnompro">
-                                                                                                </div>
-                                                                                                <label class="col-sm-3 col-form-label">Cliente : </label>
-                                                                                                <div class="col-sm-9">
-                                                                                                        <select class="form-control col-sm-12" id="exampleFormControlSelect2" formControlName="ccodcli">
-                                                                                                                <option>Cliente 1</option>
-                                                                                                                <option>Cliente 2</option>
-                                                                                                                <option>Cliente 3</option>
-                                                                                                                <option>Cliente 4</option>
-                                                                                                                <option>Cliente 5</option>
-                                                                                                              </select>
-                                                                                                </div>
-                                                                                                
-                                                                                                <label class="col-sm-12 col-form-label">Descripcion proyecto</label>
-                                                                                                <div class="NgxEditor__Wrapper col-sm-12" style="width: auto;" >
-                                                                                                  <ngx-editor-menu [editor]="editor" [toolbar]="toolbar">
-                                                                                                  </ngx-editor-menu>
-                                                                                                  <ngx-editor [editor]="editor" formControlName="cdescri">
-                                                                                                  </ngx-editor>
-                                                                                                </div>
-                          
-                                                                                          </div>
-                                                                                          <button type="button" class="btn btn-primary btn-rounded btn-fw" (click)="registroProyecto()">Guardar</button>
-                                                                                          <button type="button" class="btn btn-danger btn-rounded btn-fw" (click)="cerrarModal()">Cancelar</button>
-                                                                                          <br><br>
-                                                                                        </form>
-                                                                                      </div>
-                                                                            </div>
-                                                                            <div class="modal-footer">
-                                                                                <h5 class="modal-title">Recuerde validar los datos</h5>
-                                                                            </div>
-                                    
+                                                        <button type="button" class="btn btn-success btn-icon-text"
+                                                                (click)="abrilModal()">
+                                                                <i class="mdi mdi-alert mdi-file-plus" aria-hidden="true"></i>
+                                                                Agregar Proyecto
+                                                        </button>
+                                                        <input type="text" class="form-control"
+                                                                style="float: right; width: 200px;"
+                                                                id="exampleInputUsername1"
+                                                                placeholder="buscar Proyecto">
+                                                        <br>
+                                                        <div class="row">
+                                                                <div class="col-md-12">
+                                                                        <div class="table-responsive">
+                                                                                <table aria-describedby="myTable"
+                                                                                        class="table table-striped">
+                                                                                        <thead>
+                                                                                                <tr>
+                                                                                                        <th scope="col">
+                                                                                                                Nombre
+                                                                                                        </th>
+                                                                                                        <th scope="col">
+                                                                                                                Cliente
+                                                                                                        </th>
+                                                                                                        <th scope="col">
+                                                                                                                Descripcion
+                                                                                                        </th>
+                                                                                                        <th scope="col">
+                                                                                                                Estado
+                                                                                                        </th>
+                                                                                                        <th scope="col">
+                                                                                                                Acciones
+                                                                                                        </th>
+                                                                                                </tr>
+                                                                                        </thead>
+                                                                                        <tbody>
+                                                                                                <tr
+                                                                                                        *ngFor="let proyecto of proyectos">
+
+                                                                                                        <td
+                                                                                                                class="py-1">
+                                                                                                                {{proyecto.cnompro}}
+                                                                                                        </td>
+                                                                                                        <td>
+                                                                                                                {{proyecto.ccodcli.cnomusu}}
+                                                                                                        </td>
+                                                                                                        <td>
+                                                                                                                {{proyecto.cdescri}}
+                                                                                                        </td>
+                                                                                                        <td>
+                                                                                                                {{proyecto.cestado}}
+                                                                                                        </td>
+                                                                                                        <td>    <i title="Detalle" class="mdi mdi-view-list color-detalle" aria-hidden="true"></i>
+                                                                                                                <i title="Editar" class="mdi mdi-pencil-box-outline color-editar" aria-hidden="true"></i>
+                                                                                                                <i title="Eliminar" class="mdi mdi-delete-forever color-eliminar" aria-hidden="true"></i>
+                                                                                                        </td>
+
+                                                                                                </tr>
+                                                                                        </tbody>
+                                                                                </table>
                                                                         </div>
-                                                                        <!-- /.modal-content -->
-                                                                    </div>
-                                                                    <!-- /.modal-dialog -->
-                                                                    </div>
-                                                            </div>
-                                                    </div>
-                                            </div>
-                                    </div>
-                            </div>
+                                                                        <div class="modal animated fadeIn" id="modal-lg"
+                                                                                style="padding-right: 17px;"
+                                                                                aria-modal="true" [ngClass]="show"
+                                                                                [ngStyle]="{'display':colorEstado}"
+                                                                                role="dialog">
+                                                                                <div class="modal-dialog modal-lg">
+                                                                                        <div class="modal-content">
+                                                                                                <div
+                                                                                                        class="modal-header">
+                                                                                                        <h4
+                                                                                                                class="modal-title">
+                                                                                                                Registro
+                                                                                                                Proyecto
+                                                                                                        </h4>
+                                                                                                        <button (click)="cerrarModal()"
+                                                                                                                type="button"
+                                                                                                                class="close"
+                                                                                                                data-dismiss="modal"
+                                                                                                                aria-label="Close">
+                                                                                                                <span
+                                                                                                                        aria-hidden="true">×</span>
+                                                                                                        </button>
+                                                                                                </div>
+                                                                                                <div
+                                                                                                        class="modal-bodyCan">
+                                                                                                        <div
+                                                                                                                class="card-body">
+                                                                                                                <form class="forms-sample"
+                                                                                                                        [formGroup]="proyectoRegistro!"
+                                                                                                                        (ngSubmit)="guardarProyecto()">
+                                                                                                                        <div
+                                                                                                                                class="form-group row">
+                                                                                                                                <label
+                                                                                                                                        class="col-sm-3 col-form-label ">Asunto</label>
+                                                                                                                                <div
+                                                                                                                                        class="col-sm-9">
+                                                                                                                                        <input type="text"
+                                                                                                                                                class="form-control bordercustom"
+                                                                                                                                                placeholder="Asunto"
+                                                                                                                                                formControlName="cnompro">
+                                                                                                                                </div>
+                                                                                                                                <label
+                                                                                                                                        class="col-sm-3 col-form-label">Cliente
+                                                                                                                                        :
+                                                                                                                                </label>
+                                                                                                                                <div
+                                                                                                                                        class="col-sm-9">
+                                                                                                                                        <select class="form-control col-sm-12"
+                                                                                                                                                id="exampleFormControlSelect2"
+                                                                                                                                                formControlName="ccodcli">
+                                                                                                                                                <option>Cliente
+                                                                                                                                                        1
+                                                                                                                                                </option>
+                                                                                                                                                <option>Cliente
+                                                                                                                                                        2
+                                                                                                                                                </option>
+                                                                                                                                                <option>Cliente
+                                                                                                                                                        3
+                                                                                                                                                </option>
+                                                                                                                                                <option>Cliente
+                                                                                                                                                        4
+                                                                                                                                                </option>
+                                                                                                                                                <option>Cliente
+                                                                                                                                                        5
+                                                                                                                                                </option>
+                                                                                                                                        </select>
+                                                                                                                                </div>
 
-                    </div>
-            </div>
+                                                                                                                                <label
+                                                                                                                                        class="col-sm-12 col-form-label">Descripcion
+                                                                                                                                        proyecto</label>
+                                                                                                                                <div class="NgxEditor__Wrapper col-sm-12"
+                                                                                                                                        style="width: auto;">
+                                                                                                                                        <ngx-editor-menu
+                                                                                                                                                [editor]="editor"
+                                                                                                                                                [toolbar]="toolbar">
+                                                                                                                                        </ngx-editor-menu>
+                                                                                                                                        <ngx-editor
+                                                                                                                                                [editor]="editor"
+                                                                                                                                                formControlName="cdescri">
+                                                                                                                                        </ngx-editor>
+                                                                                                                                </div>
 
-    </div>
+                                                                                                                        </div>
+                                                                                                                        <button type="button"
+                                                                                                                                class="btn btn-primary btn-rounded btn-fw"
+                                                                                                                                (click)="registroProyecto()">Guardar</button>
+                                                                                                                        <button type="button"
+                                                                                                                                class="btn btn-danger btn-rounded btn-fw"
+                                                                                                                                (click)="cerrarModal()">Cancelar</button>
+                                                                                                                        <br><br>
+                                                                                                                </form>
+                                                                                                        </div>
+                                                                                                </div>
+                                                                                                <div
+                                                                                                        class="modal-footer">
+                                                                                                        <h5
+                                                                                                                class="modal-title">
+                                                                                                                Recuerde
+                                                                                                                validar
+                                                                                                                los
+                                                                                                                datos
+                                                                                                        </h5>
+                                                                                                </div>
+
+                                                                                        </div>
+                                                                                        <!-- /.modal-content -->
+                                                                                </div>
+                                                                                <!-- /.modal-dialog -->
+                                                                        </div>
+                                                                </div>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                </div>
+
+                        </div>
+                </div>
+
+        </div>
 </div>

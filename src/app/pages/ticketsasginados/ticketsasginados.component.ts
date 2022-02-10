@@ -64,9 +64,7 @@ export class TicketsasginadosComponent implements OnInit {
   ListarTicketAsignado(){
     this.ticketasignadoServices.listaAsginacionDesarrollo(0)
                       .subscribe((resp:any)=>{
-                        this.Tickets = resp.tickets;
-                        console.log(this.Tickets);
-                        
+                        this.Tickets = resp.tickets;                        
                       })
   }
 

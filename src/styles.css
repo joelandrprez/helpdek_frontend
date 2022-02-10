@@ -103,4 +103,20 @@
     text-overflow: ellipsis;
     overflow: hidden;
   }
+
+  tbody tr td:last-child i{
+    font-size: 20px;
+    cursor: pointer;
+    margin-right:7px ;
+}
+
+  .color-eliminar{
+    color: #B63E3E;
+  }
+  .color-editar{
+    color: #F09A0C;
+  }
+  .color-detalle{
+    color: #2DB4C9;
+  }
   

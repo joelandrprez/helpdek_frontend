@@ -4,15 +4,98 @@
             <div class="col-12 col-xl-12 grid-margin stretch-card">
                     <div class="row w-100 flex-grow">
                             <div class="col-md-12 grid-margin stretch-card">
-                                    <div class="card">
+                                <div class="card"  >
+                                        <div class="card-body">
+                                          <h4 class="card-title">Mantenimiento de Usuarios</h4>
+                                          <br>
+                                                
+                                                <button type="button" class="btn btn-success btn-icon-text" >
+                                                        <i class="mdi mdi-alert mdi-file-plus" aria-hidden="true"></i>                                                    
+                                                        Agregar Usuario
+                                                </button>
 
-                                            <div class="card-body">
-                                                    <h4 class="card-title">usuarios works!</h4>
-                                                    <p class="card-description">
-                                                        usuarios works!
-                                                    </p>
 
-                                    </div>
+                                                <input type="text" class="form-control" style="float: right; width: 200px;" id="exampleInputUsername1" placeholder="Buscar Usuarios">
+                                          <br>
+                                          <div class="table-responsive">
+                                            <table aria-describedby="myTable" class="table table-striped">
+                                              <thead>
+                                                <tr>
+                                                  <th scope="col">
+                                                    Nombres Completo
+                                                  </th>
+                                                  <th scope="col">
+                                                    Correo
+                                                  </th>
+                                                  <th scope="col">
+                                                    Dirección
+                                                  </th>
+                                                  <th scope="col">
+                                                    Tipo
+                                                  </th>
+                                                  <th scope="col">
+                                                    Género
+                                                  </th>
+                                                  <th scope="col">
+                                                    Estado
+                                                  </th>
+                                                  <th scope="col">
+                                                    Acciones
+                                                  </th>                                                  
+                                                </tr>
+                                              </thead>
+                                              <tbody>
+                                                <tr *ngFor="let lstUsu of listadoUsuario"> 
+                                                        <td class="py-1">
+                                                                {{lstUsu.cnomusu}} {{lstUsu.capeusu}}
+                                                        </td>
+                                                        <td>
+                                                                {{lstUsu.ccorusu}}
+                                                        </td>
+                                                        <td>
+                                                                {{lstUsu.cdirusu}}
+                                                        </td>
+                                                        <td>
+                                                                {{lstUsu.ccodcat}} 
+                                                        </td>
+                                                        <td >
+                                                          {{lstUsu.csexusu}}
+                                                        </td>
+                                                        <td>
+                                                            {{lstUsu.cestusu}}
+                                                        </td>                                                                                                               
+                                                        <td>    <i title="Detalle" class="mdi mdi-view-list color-detalle" aria-hidden="true"></i>
+                                                                <i title="Editar" class="mdi mdi-pencil-box-outline color-editar" aria-hidden="true"></i>
+                                                                <i title="Eliminar" class="mdi mdi-delete-forever color-eliminar" aria-hidden="true"></i>
+                                                        </td>
+                                                      </tr>
+                                              </tbody>
+                                            </table>
+                                          </div>
+                                        </div>
+                                        <div class="row">
+                                          <div class="col-sm-12 centrarCaja">
+                                              <div class="description-block border-right ">
+                                                <ul class="pagination ">
+        
+        
+                                                        <ngx-light-pagination 
+                                                            [color]="themeColor" 
+                                                            [paginationData]="paginationMeta" 
+                                                            (onPageChange)="paginationEvents($event)">
+                                                        </ngx-light-pagination>
+                                                        
+        
+                                                </ul>
+                                            
+                                            </div>
+        
+                                              <!-- /.description-block -->
+                                          </div>
+          
+                                          <!-- /.row -->
+                                      </div>
+                                </div>
                             </div>
 
                     </div>
