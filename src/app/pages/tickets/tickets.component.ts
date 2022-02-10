@@ -2,7 +2,10 @@ import { Component, NgZone, OnInit } from '@angular/core';
 import { Editor, Toolbar } from 'ngx-editor';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-
+import { TicketGeneracionService } from 'src/app/services/ticket-generacion.service';
+import { DomSanitizer } from '@angular/platform-browser';
+import { UploadService } from 'src/app/services/upload.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-tickets',
@@ -11,31 +14,52 @@ import { Router } from '@angular/router';
 })
 export class TicketsComponent implements OnInit {
 
+  public paginationMeta:any = { perPageItem: 0, totalItem: 0, currentPage: 0, totalPage: 0}
+
+  public themeColor="#260F4A";
 
   html = '';
   editor!: Editor;
 
   toolbar!: Toolbar; 
 
-  colorPresets = ['red', '#FF0000', 'rgb(255, 0, 0)'];
+  colorPresets = ['red', '#223e9c', 'rgb(255, 0, 0)'];
 
   isActive = false;
   isDisabled = false;
-
+  public desde: number = 0;
   //modals
   public colorEstado='';
   public show='';
 
-  public colorEstadoU='';
-  public showU='';
 
-  public matriculaForm?:FormGroup;
+  public colorEstadoCancelar='';
+  public showCancelar='';
+
+  public ticketRegistro?:FormGroup;
 
   public desc?:any;
 
-  constructor(private fb:FormBuilder,
-                private router:Router,
-                private ngzone:NgZone) {
+
+  public tickets:any = []
+  public ticketsTemp:any = []
+  public totalTicket:any   
+  public paginacion!: number;
+
+  public priori:any = []
+  public tipo:any = []
+  public proyectos:any=[]
+  
+  public archivoPDF!:File
+  public archivoTemp!:any
+  public detalle?:any
+  
+
+
+  constructor(  private fb:FormBuilder,
+                private uploadService:UploadService,
+                private tickeServices:TicketGeneracionService,
+                private sanitizer: DomSanitizer) {
 
               this.editor = new Editor();
               this.toolbar = [
@@ -46,19 +70,20 @@ export class TicketsComponent implements OnInit {
                 ['text_color'],
                 ['align_left', 'align_center', 'align_right'],
               ];
+
+              this.listaTicketUsuario('0');
             }
 
   ngOnInit(): void {
-    this.matriculaForm = this.fb.group({
-      cnommat:['',Validators.requiredTrue],
+    this.ticketRegistro = this.fb.group({
+      ctiptic:['',Validators.requiredTrue],
+      cnompro:['',Validators.requiredTrue],
+      cdesasu:['',Validators.requiredTrue],
+      cpriori:['',Validators.requiredTrue],
       cdescri:['',Validators.requiredTrue],
-      npremmat:['',Validators.requiredTrue],
-      creqmmat:['',Validators.requiredTrue],
-      ndurmmat:['',Validators.requiredTrue],
-      dfecini:['',Validators.requiredTrue],
-      ccurens:['61592ee2bc0966dd656f1933',Validators.requiredTrue]
-
+      carcadj:['',Validators.requiredTrue]
     })
+
     this.editor.commands
     .textColor('')
     .insertText('')
@@ -71,17 +96,123 @@ export class TicketsComponent implements OnInit {
     this.editor.destroy();
   }
   abrirModal(){
+    this.ticketRegistro?.reset();
     
     this.colorEstado='block';
     this.show = 'show';
 
-    console.log(this.colorEstadoU,this.showU);
+    this.tickeServices.traerprioritipo()
+                      .subscribe((resp:any)=>{
+                        this.priori=resp.prioridad
+                        this.tipo=resp.tipo
+                        this.tickeServices.traerProyectosFormularioRegistroTicket()
+                        .subscribe((resp:any)=>{
+                          this.proyectos= resp.data
+                          
+                        })
+                      })
+
     
   }
+
+  abrirModalCancelar(data:any){
+    this.ticketRegistro?.reset();
+    this.detalle = data
+    console.log(this.detalle);
+    
+    this.colorEstadoCancelar='block';
+    this.showCancelar = 'show';
+
+    
+  }
+  cerrarModalCancelar(){
+    this.colorEstadoCancelar='';
+    this.showCancelar = '';
+  }
+
+
   cerrarModal(){
     this.colorEstado='';
     this.show = '';
   }
-  guardar(){}
+  guardarTicketCancelado(){
+    
+  }
+
+  listaTicketUsuario(number:any){
+    this.tickeServices.listarTicketUsuario(number)
+                        .subscribe(( resp : any) =>{
+                          this.tickets = resp.data;
+                          this.ticketsTemp = resp.data;
+                          this.totalTicket = resp.total;
+
+                          this.paginacion = Math.floor(-(this.totalTicket / 5)) * -1;
+                          this.paginationMeta={
+                            perPageItem:5,
+                            totalItem: resp.total,
+                            currentPage: 1, 
+                            totalPage: this.paginacion
+                          }
+                          
+                          
+    })
+  }
+  guardarTicket(){
+    const data = {
+      ...this.ticketRegistro?.value
+    }
+    this.tickeServices.guardarTicket(data)
+                      .subscribe((resp:any)=>{
+                      this.uploadService.actualizarPDF(this.archivoPDF,resp.nuevoRegistro.uid)
+                      Swal.fire('Guardado','La imagen se guardo','success');
+                      this.cerrarModal()
+                      this.listaTicketUsuario('0')
+                      return resp.msg
+
+    })
+    
+    
+  }
+  cambiarArchivo(file:any):any{
+    
+    this.archivoPDF = file.target.files[0];
+    if(!file){
+      return this.archivoTemp = null;
+    }
+    const reader = new FileReader();
+    reader.readAsDataURL(this.archivoPDF);
+
+    reader.onloadend = () =>{
+      this.archivoTemp = reader.result;
+            
+    }
+    
+  }
+
+  valirTexto(cade:any){
+    this.desc = this.sanitizer.bypassSecurityTrustHtml(cade)
+   
+    return this.desc;
+  }
+
+
+  paginationEvents(evento:any){
+    this.desde = 0
+    this.desde = (evento.data*5)-5;
+    this.cargarTicketDes()
+       
+  }
+
+  cargarTicketDes() {
+    this.tickeServices.listarTicketUsuario(this.desde)
+      .subscribe((resp: any) => {
+        this.tickets = resp.data;
+        this.ticketsTemp = resp.data;
+        this.totalTicket = resp.total;
+       
+
+      })
+  
+  }
 
 }

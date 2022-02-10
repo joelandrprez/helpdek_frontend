@@ -8,10 +8,159 @@
                                     <div class="card">
 
                                             <div class="card-body">
-                                                    <h4 class="card-title">ticketsasginados works!</h4>
+                                                    <h4 class="card-title">Tickets Asignados </h4>
                                                     <p class="card-description">
-                                                        ticketsasginados works!
+                                                        
                                                     </p>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                                <div class="table-responsive">
+                                                                        <table class="table table-striped">
+                                                                                <thead>
+                                                                                  <tr>
+                                                                                    <th>
+                                                                                      detalle
+                                                                                    </th>
+                                                                                    <th>
+                                                                                      Tipo
+                                                                                    </th>
+                                                                                    <th>
+                                                                                      Nombre del proyecto
+                                                                                    </th>
+                                                                                    <th>
+                                                                                      Asunto
+                                                                                    </th>
+                                                                                    <th>
+                                                                                      Descripcion
+                                                                                    </th>
+                                                                                    <th>
+                                                                                      Prioridad
+                                                                                    </th>
+                                                                                    <th>
+                                                                                      Fecha
+                                                                                    </th>                                                  
+                                                                                    <th>
+                                                                                      Estado
+                                                                                    </th>
+                                                                                    <th>
+                                                                                      Progreso
+                                                                                    </th>                                                  
+                                                                                  </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                  <tr *ngFor="let ticket of Tickets"> 
+                                                                                         <td class="py-1">
+                                                                                           <a>
+                                                                                            <div class="col-sm-6 col-md-4 col-lg-3">
+                                                                                              <i class="mdi mdi-account-search customclick" (click)="abrirModal(ticket)"></i>  </div>
+                                                                                            </a>
+                                                                                          
+                                                                                          </td>
+                                                                                          <td class="py-1">
+                                                                                                  {{ticket.ctiptic.cdesvar}}
+                                                                                          </td>
+                                                                                          <td>
+                                                                                                  {{ticket.cnompro.cnompro}}
+                                                                                          </td>
+                                                                                          <td>
+                                                                                                  {{ticket.cdesasu}}
+                                                                                          </td>
+                                                                                          <td>
+                                                                                                  
+                                                                                                  <div class="rejilla" style="max-width: auto;" [innerHtml]="valirTexto(ticket.cdescri)"></div>
+                                                                                          </td>
+                                                                                          <td >
+                                                                                            
+                                                                                            
+                                                                                            
+                                                                                            <label 
+                                                                                            [ngStyle]="{'background-color':ticket.cpriori.cdesvar}"
+                                                                                            class="badge">{{ticket.cpriori.cconvar}}  </label>
+                                                                                          </td>
+                                                                                          <td>
+                                                                                              {{ticket.dfecreg}}
+                                                                                          </td>   
+                                                                                          <td>
+                                                                                                  {{ticket.cestado}}
+                                                                                              
+                                                                                          </td>                                                                                                             
+                                                                                          <td>
+                                                                                                  <div class="progress">
+                                                                                                          <div class="progress-bar bg-warning" role="progressbar" style="width: 70%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                                                                                                          </div>
+                                                                                                  </div>
+                                                                                          </td>
+                                                                                        </tr>
+                                                                                </tbody>
+                                                                              </table>
+                                                                </div>
+                                                                <div class="modal animated fadeIn" id="modal-lg" style="padding-right: 17px;" aria-modal="true" [ngClass]="show" [ngStyle]="{'display':colorEstado}"
+                                                                role="dialog">
+                                                                <div class="modal-dialog modal-lg">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h4 class="modal-title">Asignacion Ticket</h4>
+                                                                            <button (click)="cerrarModal()" type="button" class="close"
+                                                                                data-dismiss="modal" aria-label="Close">
+                                                                                <span aria-hidden="true">×</span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="modal-bodyCan"> 
+                                                                            <div class="card-body">
+                                                                                    <form class="forms-sample" [formGroup]="ticketActualizar!" (ngSubmit)="guardarTicket()">
+                                                                                      <div class="form-group row">
+                                                                                        
+                                                                                        <label class="col-sm-3 col-form-label">Tipo :</label>
+                                                                                        <label class="col-sm-3 col-form-label">{{ticket?.ctiptic.cdesvar}}</label>
+                                                                                        
+                                                                                        <label class="col-sm-3 col-form-label">Nombre del proyecto : </label>
+                                                                                        <label class="col-sm-3 col-form-label">{{ticket?.cnompro.cnompro}}</label>
+                      
+                                                                                        <label class="col-sm-3 col-form-label">Asunto : </label>
+                                                                                        <label class="col-sm-3 col-form-label">{{ticket?.cdesasu}}</label>
+                       
+                      
+                                                                                        <label class="col-sm-3 col-form-label">Prioridad : </label>
+                                                                                        <label class="col-sm-3 col-form-label">{{ticket?.cpriori.cconvar}}</label>
+                      
+                                                                                        <label class="col-sm-3 col-form-label">Descripcion cliente: </label>
+                                                                                        <label class="col-sm-9 col-form-label" [innerHtml]="valirTexto(ticket?.cdescri)"></label>
+
+                                                                                        <label class="col-sm-3 col-form-label">Descripcion Atencion al cliente: </label>
+                                                                                        <label class="col-sm-9 col-form-label" [innerHtml]="valirTexto(ticket?.cdesate)"></label>
+                      
+                                                                                        <label class="col-sm-3 col-form-label">Estado : </label>
+                                                                                        <select class="form-control col-sm-9" id="exampleFormControlSelect2">
+                                                                                          <option>Resuleto</option>
+                                                                                          <option>Devuelto</option>
+                                                                                        </select>
+                      
+                                                                                        <label class="col-sm-12 col-form-label">Descripcion Desarrollo</label>
+                                                                                        <div class="NgxEditor__Wrapper col-sm-12" style="width: auto;" >
+                                                                                          <ngx-editor-menu [editor]="editor" [toolbar]="toolbar">
+                                                                                          </ngx-editor-menu>
+                                                                                          <ngx-editor [editor]="editor" formControlName="cdesate">
+                                                                                          </ngx-editor>
+                                                                                        </div>
+                      
+                                                                                      </div>
+                                                                                      <button type="button" class="btn btn-primary btn-rounded btn-fw" (click)="cerrarModal()">Guardar cambios</button>
+                                                                                      <button type="button" class="btn btn-danger btn-rounded btn-fw">Devolver Ticket</button>
+                                                                                      <br><br>
+                                                                                    </form>
+                                                                                  </div>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <h5 class="modal-title">Recuerde validar los datos</h5>
+                                                                        </div>
+                                
+                                                                    </div>
+                                                                    <!-- /.modal-content -->
+                                                                </div>
+                                                                <!-- /.modal-dialog -->
+                                                                </div>
+                                                        </div>
+                                                </div>
 
                                     </div>
                             </div>

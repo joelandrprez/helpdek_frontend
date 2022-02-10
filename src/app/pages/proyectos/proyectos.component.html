@@ -9,7 +9,7 @@
                                                     <h4 class="card-title">Mantenimiento de Proyectos</h4>
                                                     <br>
                                                           
-                                                          <button type="button" class="btn btn-success btn-icon-text">
+                                                          <button type="button" class="btn btn-success btn-icon-text" (click)="abrilModal()">
                                                                   <i class="mdi mdi-alert mdi-file-plus"></i>                                                    
                                                                   Agregar Proyecto
                                                           </button>
@@ -39,32 +39,79 @@
                                                                                       </tr>
                                                                                     </thead>
                                                                                     <tbody>
-                                                                                      <tr>
+                                                                                      <tr *ngFor="let proyecto of proyectos">
                                                                                              
                                                                                               <td class="py-1">
-                                                                                                      Proyecto 1
+                                                                                                     {{proyecto.cnompro}}
                                                                                               </td>
                                                                                               <td>
-                                                                                                      Cliente 1
+                                                                                                     {{proyecto.ccodcli.cnomusu}}
                                                                                               </td>
                                                                                               <td>
-                                                                                                      Se nesecita cambiar el estilo del boton
+                                                                                                      {{proyecto.cdescri}}
                                                                                               </td>
                                                                                               <td>
-                                                                                                     Se acepto el ticket y fue derivado al area de desarrollo
+                                                                                                       {{proyecto.cestado}}
                                                                                               </td>
-                                                                                              <td>
-                                                                                                    2021-01-27
-                                                                                              </td> 
-                                                                                              <td>
-                                                                                                      ASIGNADO
-                                                                                                  
-                                                                                              </td> 
+
                                                                                             </tr>
                                                                                     </tbody>
                                                                                   </table>
                                                                     </div>
-
+                                                                    <div class="modal animated fadeIn" id="modal-lg" style="padding-right: 17px;" aria-modal="true" [ngClass]="show" [ngStyle]="{'display':colorEstado}"
+                                                                    role="dialog">
+                                                                    <div class="modal-dialog modal-lg">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <h4 class="modal-title">Registro Proyecto</h4>
+                                                                                <button (click)="cerrarModal()" type="button" class="close"
+                                                                                    data-dismiss="modal" aria-label="Close">
+                                                                                    <span aria-hidden="true">×</span>
+                                                                                </button>
+                                                                            </div>
+                                                                            <div class="modal-bodyCan"> 
+                                                                                <div class="card-body">
+                                                                                        <form class="forms-sample" [formGroup]="proyectoRegistro!" (ngSubmit)="guardarProyecto()">
+                                                                                          <div class="form-group row">
+                                                                                                <label class="col-sm-3 col-form-label ">Asunto</label>
+                                                                                                <div class="col-sm-9">
+                                                                                                  <input type="text" class="form-control bordercustom" placeholder="Asunto" formControlName="cnompro">
+                                                                                                </div>
+                                                                                                <label class="col-sm-3 col-form-label">Cliente : </label>
+                                                                                                <div class="col-sm-9">
+                                                                                                        <select class="form-control col-sm-12" id="exampleFormControlSelect2" formControlName="ccodcli">
+                                                                                                                <option>Cliente 1</option>
+                                                                                                                <option>Cliente 2</option>
+                                                                                                                <option>Cliente 3</option>
+                                                                                                                <option>Cliente 4</option>
+                                                                                                                <option>Cliente 5</option>
+                                                                                                              </select>
+                                                                                                </div>
+                                                                                                
+                                                                                                <label class="col-sm-12 col-form-label">Descripcion proyecto</label>
+                                                                                                <div class="NgxEditor__Wrapper col-sm-12" style="width: auto;" >
+                                                                                                  <ngx-editor-menu [editor]="editor" [toolbar]="toolbar">
+                                                                                                  </ngx-editor-menu>
+                                                                                                  <ngx-editor [editor]="editor" formControlName="cdescri">
+                                                                                                  </ngx-editor>
+                                                                                                </div>
+                          
+                                                                                          </div>
+                                                                                          <button type="button" class="btn btn-primary btn-rounded btn-fw" (click)="registroProyecto()">Guardar</button>
+                                                                                          <button type="button" class="btn btn-danger btn-rounded btn-fw" (click)="cerrarModal()">Cancelar</button>
+                                                                                          <br><br>
+                                                                                        </form>
+                                                                                      </div>
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <h5 class="modal-title">Recuerde validar los datos</h5>
+                                                                            </div>
+                                    
+                                                                        </div>
+                                                                        <!-- /.modal-content -->
+                                                                    </div>
+                                                                    <!-- /.modal-dialog -->
+                                                                    </div>
                                                             </div>
                                                     </div>
                                             </div>

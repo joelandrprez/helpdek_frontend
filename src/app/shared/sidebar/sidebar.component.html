@@ -28,8 +28,8 @@
           <span class="menu-title"><a class="nav-link" routerLink='/dashboard'>Dashboard</a></span>
         </a>
       </li>
-      <li class="nav-item sidebar-category">
-        <p>Components</p>
+      <li class="nav-item ">
+        
         <span></span>
       </li>
         <li class="nav-item" *ngFor="let item of menuService.menu">
@@ -44,10 +44,14 @@
               <ul class="nav flex-column sub-menu" *ngFor="let subMenuitem of item.submenu">
 
                 <li class="nav-item"> <a class="nav-link" [routerLink]="subMenuitem.url">{{subMenuitem.titulo}}</a></li>
-                
+                                
               </ul>
+
             </div>
+
           </li>
+          <button type="button" class="btn btn-secondary" (click)="logOut()">Cerrar Sesion</button>
+
     </ul>
 </nav>
 

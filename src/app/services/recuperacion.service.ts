@@ -17,7 +17,7 @@ export class RecuperacionService {
 
   constructor(private http: HttpClient,
               private router: Router,
-              private ngzone: NgZone,) {
+              private ngzone: NgZone) {
 
 
                }

@@ -1,0 +1,22 @@
+.modal-dialog{
+    overflow-y: initial !important
+}
+.modal-body{
+    height: 550px;
+    overflow-y: auto;
+}
+
+.modal-bodyCan{
+    height: 550px;
+    overflow-y: auto;
+}
+
+.centrarCaja {
+
+    /*IMPORTANTE*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+}

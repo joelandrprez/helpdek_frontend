@@ -9,7 +9,11 @@
                                                                 <h4 class="card-title">Mantenimiento de Variables</h4>
 
                                                               <input type="text" class="form-control" style="float: right; width: 200px;" id="exampleInputUsername1" >
-                                                        
+                                                        <br>
+                                                        <button type="button" class="btn btn-success btn-icon-text" (click)="abrilModal()">
+                                                                <i class="mdi mdi-alert mdi-file-plus"></i>                                                    
+                                                                Agregar Variable
+                                                        </button>
 
                                                                         <div class="table-responsive">
                                                                                 <table class="table table-striped">
@@ -22,7 +26,7 @@
                                                                                               Descripcion
                                                                                             </th>
                                                                                             <th>
-                                                                                              Tipo
+                                                                                              Nombre
                                                                                             </th>                                                 
                                                                                             <th>
                                                                                               Fecha
@@ -31,28 +35,79 @@
                                                                                           </tr>
                                                                                         </thead>
                                                                                         <tbody>
-                                                                                          <tr>
+                                                                                          <tr *ngFor="let variable of variables">
                                                                                                  
                                                                                                   <td class="py-1">
-                                                                                                          Proyecto 1
+                                                                                                        <input type="text" class="form-control bordercustom" placeholder="Asunto" value="{{variable.cconvar}}">
+                                                                                                          
                                                                                                   </td>
                                                                                                   <td>
-                                                                                                          Cliente 1
+                                                                                                        <input type="text" class="form-control bordercustom" placeholder="Asunto" value="{{variable.cdesvar}}">
+                                                                                                        
                                                                                                   </td>
                                                                                                   <td>
-                                                                                                          Se nesecita cambiar el estilo del boton
+                                                                                                        <input type="text" class="form-control bordercustom" placeholder="Asunto" value="{{variable.cnomvar}}">
+                                                                                                        
                                                                                                   </td>
+                                                                                                  
                                                                                                   <td>
-                                                                                                         Se acepto el ticket y fue derivado al area de desarrollo
-                                                                                                  </td>
-                                                                                                  <td>
-                                                                                                        2021-01-27
+                                                                                                        {{variable.dfecmod}}
                                                                                                   </td> 
                                                                                                 </tr>
                                                                                         </tbody>
                                                                                       </table>
                                                                         </div>
-    
+                                                                        <div class="modal animated fadeIn" id="modal-lg" style="padding-right: 17px;" aria-modal="true" [ngClass]="show" [ngStyle]="{'display':colorEstado}"
+                                                                    role="dialog">
+                                                                    <div class="modal-dialog modal-lg">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <h4 class="modal-title">Registro Proyecto</h4>
+                                                                                <button (click)="cerrarModal()" type="button" class="close"
+                                                                                    data-dismiss="modal" aria-label="Close">
+                                                                                    <span aria-hidden="true">×</span>
+                                                                                </button>
+                                                                            </div>
+                                                                            <div class="modal-bodyCan"> 
+                                                                                <div class="card-body">
+                                                                                        <form class="forms-sample" [formGroup]="variableRegistro!" (ngSubmit)="guardarVariables()">
+                                                                                          <div class="form-group row">
+                                                                                                <label class="col-sm-3 col-form-label ">Contenido</label>
+                                                                                                <div class="col-sm-9">
+                                                                                                  <input type="text" class="form-control bordercustom" placeholder="Contenido de la variable" formControlName="cconvar">
+                                                                                                </div>
+                                                                                                <label class="col-sm-3 col-form-label ">Nombre</label>
+                                                                                                <div class="col-sm-9">
+                                                                                                  <input type="text" class="form-control bordercustom" placeholder="Nombre de la Variable" formControlName="cnomvar">
+                                                                                                </div>
+                                                                                                <label class="col-sm-3 col-form-label ">Descripcion</label>
+                                                                                                <div class="col-sm-9">
+                                                                                                  <input type="text" class="form-control bordercustom" placeholder="Descripcion" formControlName="cdesvar">
+                                                                                                </div>
+                                                                                                <label class="col-sm-3 col-form-label ">Tipo</label>
+                                                                                                <div class="col-sm-9">
+                                                                                                  <input type="text" class="form-control bordercustom" placeholder="Tipo de variable" formControlName="ctipvar">
+                                                                                                </div>
+
+                                                                                                                                                                                               
+ 
+                          
+                                                                                          </div>
+                                                                                          <button type="button" class="btn btn-primary btn-rounded btn-fw" >Guardar</button>
+                                                                                          <button type="button" class="btn btn-danger btn-rounded btn-fw" (click)="cerrarModal()">Cancelar</button>
+                                                                                          <br><br>
+                                                                                        </form>
+                                                                                      </div>
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <h5 class="modal-title">Recuerde validar los datos</h5>
+                                                                            </div>
+                                    
+                                                                        </div>
+                                                                        <!-- /.modal-content -->
+                                                                    </div>
+                                                                    <!-- /.modal-dialog -->
+                                                                    </div>
                                                                 </div>
                                                         </div>
                                                 </div>

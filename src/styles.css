@@ -92,3 +92,15 @@
   .customclick{
     cursor: pointer;
   }
+
+
+  .rejilla {
+    white-space: pre-wrap;
+    outline: none;
+    font-variant-ligatures: none;
+    width: 300px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+  
