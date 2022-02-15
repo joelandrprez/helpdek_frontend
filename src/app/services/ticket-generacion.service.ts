@@ -45,7 +45,20 @@ export class TicketGeneracionService {
   guardarTicket(data:any){
     return this.http.post(`${base_url}/ticket`, data, this.headers)
   }
-  
+  traerPDF(data:any){
+    return this.http.get(`${base_url}/proyecto/pdf/${data}`, this.headers)
+  }
+  AnularTicketRegistrado(uid:any){
+    return this.http.put(`${base_url}/ticket/AnularTicketUsuario/${uid}`,uid, this.headers)
+  }
+  ActualizarTicketUsuario(data:any,uid:any){
+    return this.http.put(`${base_url}/ticket/ActualizarTickerUsuario/${uid}`,data, this.headers)
+  }
+  BusquedaTicketUsuario(data:any,termino:any){
+    return this.http.get(`${base_url}/ticket/busquedapornombre/${termino}?inicio=0`, this.headers)
+  }
+ 
+ 
 
 
 

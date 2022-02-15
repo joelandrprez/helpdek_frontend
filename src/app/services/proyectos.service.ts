@@ -37,4 +37,7 @@ export class ProyectosService {
   listaCliente(){
     return this.http.get(`${base_url}/usuarios/clientes`, this.headers)
   }
+  buscarProyecto(termino:any){
+    return this.http.get(`${base_url}/proyecto/buscar?termino=${termino}`, this.headers)
+  }
 }

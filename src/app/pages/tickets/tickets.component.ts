@@ -28,9 +28,16 @@ export class TicketsComponent implements OnInit {
   isActive = false;
   isDisabled = false;
   public desde: number = 0;
-  //modals
+  //modals registro
   public colorEstado='';
   public show='';
+  //modals detalle
+  public colorEstadoDetalle='';
+  public showDetalle='';
+  //modals actualizar
+  public colorEstadoUpdate='';
+  public showUpdate='';
+
 
 
   public colorEstadoCancelar='';
@@ -54,6 +61,8 @@ export class TicketsComponent implements OnInit {
   public archivoTemp!:any
   public detalle?:any
   
+  // desabilitar
+  public utDisabled:any;
 
 
   constructor(  private fb:FormBuilder,
@@ -75,6 +84,7 @@ export class TicketsComponent implements OnInit {
             }
 
   ngOnInit(): void {
+    this.utDisabled = null;
     this.ticketRegistro = this.fb.group({
       ctiptic:['',Validators.requiredTrue],
       cnompro:['',Validators.requiredTrue],
@@ -95,54 +105,69 @@ export class TicketsComponent implements OnInit {
   ngOnDestroy(): void {
     this.editor.destroy();
   }
-  abrirModal(){
-    this.ticketRegistro?.reset();
+  abrirModalregistro(){
     
     this.colorEstado='block';
     this.show = 'show';
-
-    this.tickeServices.traerprioritipo()
-                      .subscribe((resp:any)=>{
-                        this.priori=resp.prioridad
-                        this.tipo=resp.tipo
-                        this.tickeServices.traerProyectosFormularioRegistroTicket()
-                        .subscribe((resp:any)=>{
-                          this.proyectos= resp.data
-                          
-                        })
-                      })
-
+    this.ticketRegistro?.reset();
+    this.prioridad();
     
   }
+  prioridad(){
+    this.tickeServices.traerprioritipo()
+    .subscribe((resp:any)=>{
+      this.priori=resp.prioridad
+      this.tipo=resp.tipo
+      this.tickeServices.traerProyectosFormularioRegistroTicket()
+      .subscribe((resp:any)=>{
+        this.proyectos= resp.data
+        
+      })
+    })
+  }
 
-  abrirModalCancelar(data:any){
+  abrirModalDetalle(data:any){
     this.ticketRegistro?.reset();
     this.detalle = data
-    console.log(this.detalle);
-    
-    this.colorEstadoCancelar='block';
-    this.showCancelar = 'show';
-
-    
+    this.colorEstadoDetalle='block';
+    this.showDetalle = 'show';
   }
-  cerrarModalCancelar(){
-    this.colorEstadoCancelar='';
-    this.showCancelar = '';
-  }
-
-
-  cerrarModal(){
-    this.colorEstado='';
-    this.show = '';
-  }
-  guardarTicketCancelado(){
+  abrirModalUpdate(data:any){
+    this.detalle = data
+    console.log(data);
     
+    this.ticketRegistro = this.fb.group({
+      ctiptic:[data.ctiptic._id,Validators.requiredTrue],
+      cnompro:[data.cnompro._id,Validators.requiredTrue],
+      cdesasu:[data.cdesasu,Validators.requiredTrue],
+      cpriori:[data.cpriori._id,Validators.requiredTrue],
+      cdescri:[data.cdescri,Validators.requiredTrue],
+    })
+    this.prioridad();
+    this.colorEstadoUpdate='block';
+    this.showUpdate = 'show';
+  }
+
+  cerrarModal(tipo:string){
+    if(tipo === 'registro'){
+      this.colorEstado='';
+      this.show = '';
+    }else if(tipo === 'detalle'){
+      this.colorEstadoDetalle='';
+      this.showDetalle = '';
+    }else if(tipo === 'update'){
+      this.colorEstadoUpdate='';
+      this.showUpdate='';
+    }
+
   }
 
   listaTicketUsuario(number:any){
     this.tickeServices.listarTicketUsuario(number)
                         .subscribe(( resp : any) =>{
                           this.tickets = resp.data;
+                          console.log(this.tickets);
+                          
                           this.ticketsTemp = resp.data;
                           this.totalTicket = resp.total;
 
@@ -157,6 +182,32 @@ export class TicketsComponent implements OnInit {
                           
     })
   }
+  BuquedaTicket(termino:string){
+    if(termino.length === 0){
+      this.tickets = this.ticketsTemp;
+      console.log(this.ticketsTemp);
+      console.log(this.tickets);
+
+      
+      return ;
+    }
+    this.tickeServices.BusquedaTicketUsuario(termino,termino)
+                      .subscribe(( resp : any) =>{
+                        this.tickets = resp.data;
+                        this.totalTicket = resp.total;
+
+                        this.paginacion = Math.floor(-(this.totalTicket / 5)) * -1;
+                        this.paginationMeta={
+                          perPageItem:5,
+                          totalItem: resp.total,
+                          currentPage: 1, 
+                          totalPage: this.paginacion
+                        }
+      
+      
+})
+      
+  }
   guardarTicket(){
     const data = {
       ...this.ticketRegistro?.value
@@ -165,10 +216,41 @@ export class TicketsComponent implements OnInit {
                       .subscribe((resp:any)=>{
                       this.uploadService.actualizarPDF(this.archivoPDF,resp.nuevoRegistro.uid)
                       Swal.fire('Guardado','La imagen se guardo','success');
-                      this.cerrarModal()
+                      this.cerrarModal('registro')
                       this.listaTicketUsuario('0')
                       return resp.msg
 
+    })
+    
+    
+  }
+  actualziarTicket(){
+    const data = {
+      ...this.ticketRegistro?.value
+    }
+    console.log(this.detalle);
+    
+    this.tickeServices.ActualizarTicketUsuario(data,this.detalle.uid)
+                      .subscribe((resp:any)=>{
+                        console.log(resp);
+                        this.tickets = resp.data;
+                        console.log(this.tickets);
+                        
+                        this.ticketsTemp = resp.data;
+                        this.totalTicket = resp.total;
+
+                        this.paginacion = Math.floor(-(this.totalTicket / 5)) * -1;
+                        this.paginationMeta={
+                          perPageItem:5,
+                          totalItem: resp.total,
+                          currentPage: 1, 
+                          totalPage: this.paginacion
+                        }
+                      this.uploadService.actualizarPDF(this.archivoPDF,this.detalle.uid)
+                      Swal.fire('Guardado','La imagen se guardo','success');
+                      this.cerrarModal('update')
+                      this.listaTicketUsuario('0')
+                      return resp.msg
     })
     
     
@@ -214,5 +296,30 @@ export class TicketsComponent implements OnInit {
       })
   
   }
+  abrirLink(url: string){
+    window.open(`http://localhost:3000/api/proyecto/pdf/${url}`, "_blank");
+  }
+  anularTicket(data:any){
+    
+    const { uid } = data
+    Swal.fire({
+      title: 'Esta seguro de eliminar este Ticket?',
+      showDenyButton: true,
+      confirmButtonText: 'Eliminar',
+      denyButtonText: `Cancelar`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.tickeServices.AnularTicketRegistrado(uid)
+                          .subscribe((resp:any)=>{
+                            this.listaTicketUsuario(0)
+                            console.log(resp);                            
+                          })
+        Swal.fire('Se anulo el Ticket!', '', 'success')
+      } else if (result.isDenied) {
+        Swal.fire('No se guardaron los cambios', '', 'info')
+      }
+    })
+  }
+
 
 }

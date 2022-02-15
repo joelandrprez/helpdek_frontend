@@ -24,6 +24,8 @@ export class ProyectosComponent implements OnInit {
   public show='';
   public proyecto?:any;
 
+
+  // Listado
   public proyectos:any = []
   public ProyectoTemp:any = []
   public totalProyectos:any   
@@ -57,6 +59,7 @@ export class ProyectosComponent implements OnInit {
 
 
 
+
   constructor(private proyectoServices:ProyectosService,
               private fb:FormBuilder,
               private sanitizer: DomSanitizer ) { 
@@ -66,6 +69,7 @@ export class ProyectosComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    
     this.proyectoRegistro = this.fb.group({
       cnompro:['',Validators.requiredTrue],
       ccodcli:['',Validators.requiredTrue],
@@ -79,10 +83,11 @@ export class ProyectosComponent implements OnInit {
   listaProyectos(num:any){
     this.proyectoServices.listarTProyectos(0)
                 .subscribe((resp:any)=>{
-                  console.log(resp.proyectos);
+
                   this.totalProyectos = resp.total
                   this.proyectos = resp.proyectos
-
+                  this.ProyectoTemp = resp.proyectos
+                  
                   this.paginacion = Math.floor(-(this.totalProyectos / 5)) * -1;
                   this.paginationMeta={
                     perPageItem:5,
@@ -200,16 +205,18 @@ export class ProyectosComponent implements OnInit {
                          })
      
   }
-  formatear(valor:any){
-    if(valor==='true'){
-      return 'true'
-    }else if(valor==='false'){
-      return 'false'
+  buscar(valor:string){
+    if(valor.length === 0){
+      this.proyectos = this.ProyectoTemp;
+      console.log(this.ProyectoTemp);
+      
+      return ;
     }
-    else{
-      return ''
-    }
-  
+    this.proyectoServices.buscarProyecto(valor)
+                        .subscribe((resp:any) => {
+                          console.log(resp);
+                          this.proyectos = resp.proyectos;
+                        })
   }
   
 

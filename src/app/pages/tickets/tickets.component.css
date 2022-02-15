@@ -2,12 +2,12 @@
     overflow-y: initial !important
 }
 .modal-body{
-    height: 550px;
+    height: 520px;
     overflow-y: auto;
 }
 
 .modal-bodyCan{
-    height: 550px;
+    height: 420px;
     overflow-y: auto;
 }
 
@@ -20,5 +20,10 @@
 
 
 }
+.btnderecha{
+    float: right;
+}
+
+
 
 

@@ -18,7 +18,9 @@
                                                         <input type="text" class="form-control bordercustom"
                                                                 style="float: right; width: 200px;"
                                                                 id="exampleInputUsername1"
-                                                                placeholder="buscar Proyecto">
+                                                                placeholder="buscar Proyecto"
+                                                                (keyup)="buscar(txtTermino.value)"  
+                                                                #txtTermino>
                                                         <br>
                                                         <div class="row">
                                                                 <div class="col-md-12">
@@ -115,7 +117,7 @@
                                                                                                                         <div
                                                                                                                                 class="form-group row">
                                                                                                                                 <label
-                                                                                                                                        class="col-sm-3 col-form-label ">Asunto</label>
+                                                                                                                                        class="col-sm-3 col-form-label ">Nombre Proyecto</label>
                                                                                                                                 <div
                                                                                                                                         class="col-sm-9">
                                                                                                                                         <input type="text"
