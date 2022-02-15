@@ -31,4 +31,10 @@ export class ProyectosService {
   guardarProyectos(data:any){
     return this.http.post(`${base_url}/proyecto`, data, this.headers)
   }
+  actualizarProyectos(uid:any,data:any){
+    return this.http.put(`${base_url}/proyecto/${uid}`, data, this.headers)
+  }
+  listaCliente(){
+    return this.http.get(`${base_url}/usuarios/clientes`, this.headers)
+  }
 }

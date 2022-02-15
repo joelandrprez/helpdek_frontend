@@ -55,7 +55,6 @@ export class UsuariosComponent implements OnInit {
       .subscribe((resp: any) => {
         this.listadoUsuario = resp.usuarios;
         this.totalUsuario = resp.total;
-
       })
   
   }
