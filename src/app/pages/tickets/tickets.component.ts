@@ -6,6 +6,7 @@ import { TicketGeneracionService } from 'src/app/services/ticket-generacion.serv
 import { DomSanitizer } from '@angular/platform-browser';
 import { UploadService } from 'src/app/services/upload.service';
 import Swal from 'sweetalert2';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-tickets',
@@ -281,7 +282,7 @@ export class TicketsComponent implements OnInit {
   
   }
   abrirLink(url: string){
-    window.open(`http://localhost:3000/api/proyecto/pdf/${url}`, "_blank");
+    window.open(`${environment.base_url}/proyecto/pdf/${url}`, "_blank");
   }
   anularTicket(data:any){
     

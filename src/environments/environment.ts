@@ -4,8 +4,10 @@
 
 export const environment = {
   production: false,
-  base_url:'http://localhost:3000/api',
-  recuperacion_url:'http://localhost:4200/recuperarContrasena/',
+  base_url:'https://plataformahelpdesk.herokuapp.com/api',
+ // base_url:'http://localhost:3000/api',
+ //recuperacion_url:'http://localhost:3000/recuperarContrasena/',
+  recuperacion_url:'https://plataformahelpdesk.herokuapp.com/recuperarContrasena/',
 };
 
 /*
