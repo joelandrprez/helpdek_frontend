@@ -1,21 +1,3 @@
-<!-- <p>sidebar works!</p>
-
-<li *ngFor="let item of menuService.menu">
-
-    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="true">
-        <i [class]="item.icono"></i>
-        <span class="hide-menu">{{item.titulo}} <span class="label label-rouded label-themecolor pull-right">{{item.submenu.len}}</span></span>
-    </a>
-
-    <ul aria-expanded="true" class="collapse">
-        <li *ngFor="let subMenuitem of item.submenu">
-            <a [routerLink]="subMenuitem.url">{{subMenuitem.titulo}}</a>
-        </li>
-    </ul>
-
-</li> -->
-
-
  <nav class="sidebar sidebar-offcanvas" id="sidebar">
     <ul class="nav">
       <li class="nav-item sidebar-category">
@@ -50,7 +32,10 @@
             </div>
 
           </li>
-          <button type="button" class="btn btn-secondary" (click)="logOut()">Cerrar Sesion</button>
+          <div style="padding-top: 45px; border:1px ; display:flex; justify-content:center;  align-items:center;">
+            <button type="button"  class="btn btn-secondary" (click)="logOut()">Cerrar Sesion</button>
+          </div>
+          
 
     </ul>
 </nav>

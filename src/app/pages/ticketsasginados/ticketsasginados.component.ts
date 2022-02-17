@@ -15,15 +15,13 @@ export class TicketsasginadosComponent implements OnInit {
   public colorEstado='';
   public show='';
 
-  html = '';
-  editor!: Editor;
+  public showUpdate='';
+  public colorEstadoUpdate='';
 
-  toolbar!: Toolbar; 
-  colorPresets = ['red', '#223e9c', 'rgb(255, 0, 0)'];
   public desc?:any;
 
   public Tickets:any = []
-  public ticketActualizar?:FormGroup;
+  public TicketAsignado?:FormGroup;
 
   public ticket:any;
 
@@ -31,55 +29,81 @@ export class TicketsasginadosComponent implements OnInit {
   public tipo:any = []
   
 
+  public detalle?:any
+
+  public rpta:any = [
+    {data:'resuelto'},
+    {data:'pendiente por devolver'},
+  ]
+
   constructor(private fb:FormBuilder,
               private sanitizer: DomSanitizer,
               private ticketasignadoServices : AsginacionTicketService
                ) {
 
                 this.ListarTicketAsignado();
-                this.editor = new Editor();
-                this.toolbar = [
-                  // default value
-                  ['underline'],
-                  ['ordered_list'],
-                  [{ heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }],
-                  ['text_color'],
-                  ['align_left', 'align_center', 'align_right'],
-                ];
+
                 }
 
   ngOnInit(): void {
-    this.ticketActualizar = this.fb.group({
-      cestado:['',Validators.requiredTrue],
-      cdesasi:['',Validators.requiredTrue],
-      cdesate:['',Validators.requiredTrue],
+    this.TicketAsignado = this.fb.group({
+      cestado:['resuelto',Validators.requiredTrue],
+      cdesdes:['Se procedio con lo solicitado',Validators.requiredTrue],
+
     })
   }
 
-  cerrarModal(){
-    this.colorEstado='';
-    this.show = '';
+  cerrarModal(tipo:string){
+    if(tipo === 'detalle'){
+      this.colorEstado='';
+      this.show = '';
+    }else if(tipo === 'update'){
+      this.colorEstadoUpdate='';
+      this.showUpdate='';
+    }
+
   }
 
   ListarTicketAsignado(){
     this.ticketasignadoServices.listaAsginacionDesarrollo(0)
                       .subscribe((resp:any)=>{
                         this.Tickets = resp.tickets;                        
+                        console.log(resp);
                       })
   }
 
   abrirModal(data:any){
-    this.ticketActualizar?.reset();
-    this.ticket = data;
+    this.TicketAsignado?.reset();
+    this.detalle = data;
     this.colorEstado='block';
     this.show = 'show';
   }
-
-  guardarTicket(){
-
+  abrirModalUpdate(data:any){
+    this.detalle = data;
+    this.colorEstadoUpdate='block';
+    this.showUpdate = 'show';
   }
+
   valirTexto(cade:any){
     this.desc = this.sanitizer.bypassSecurityTrustHtml(cade)
     return this.desc;
   }
+  BuquedaTicket(cadena:string){
+    console.log(cadena);
+    
+  }
+  abrirLink(url: string){
+    window.open(`http://localhost:3000/api/proyecto/pdf/${url}`, "_blank");
+  }
+  guardarTicket(){
+    const data = {...this.TicketAsignado?.value}
+    
+    this.ticketasignadoServices.actualizarTicketresueltorechazado(data,this.detalle.uid)
+                                .subscribe((resp:any)=>{
+                                  console.log(resp);
+                                  this.ListarTicketAsignado();
+                                  this.cerrarModal('update')
+                                })
+  }
+  
 }

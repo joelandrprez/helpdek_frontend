@@ -1,0 +1,28 @@
+.modal-dialog{
+    overflow-y: initial !important
+}
+.modal-bodyUpdate{
+    height: 500px;
+    overflow-y: auto;
+}
+
+.modal-bodyCan{
+    height: 420px;
+    overflow-y: auto;
+}
+
+.centrarCaja {
+
+    /*IMPORTANTE*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.btnderecha{
+    float: right;
+}
+
+
+
+

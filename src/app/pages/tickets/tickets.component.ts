@@ -70,15 +70,6 @@ export class TicketsComponent implements OnInit {
                 private tickeServices:TicketGeneracionService,
                 private sanitizer: DomSanitizer) {
 
-              this.editor = new Editor();
-              this.toolbar = [
-                // default value
-                ['underline'],
-                ['ordered_list'],
-                [{ heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }],
-                ['text_color'],
-                ['align_left', 'align_center', 'align_right'],
-              ];
 
               this.listaTicketUsuario('0');
             }
@@ -94,17 +85,9 @@ export class TicketsComponent implements OnInit {
       carcadj:['',Validators.requiredTrue]
     })
 
-    this.editor.commands
-    .textColor('')
-    .insertText('')
-    .focus()
-    .scrollIntoView()
-    .exec();
+
   }
 
-  ngOnDestroy(): void {
-    this.editor.destroy();
-  }
   abrirModalregistro(){
     
     this.colorEstado='block';
@@ -134,7 +117,6 @@ export class TicketsComponent implements OnInit {
   }
   abrirModalUpdate(data:any){
     this.detalle = data
-    console.log(data);
     
     this.ticketRegistro = this.fb.group({
       ctiptic:[data.ctiptic._id,Validators.requiredTrue],
@@ -212,10 +194,12 @@ export class TicketsComponent implements OnInit {
     const data = {
       ...this.ticketRegistro?.value
     }
+
+   
     this.tickeServices.guardarTicket(data)
                       .subscribe((resp:any)=>{
                       this.uploadService.actualizarPDF(this.archivoPDF,resp.nuevoRegistro.uid)
-                      Swal.fire('Guardado','La imagen se guardo','success');
+                      Swal.fire('Guardado','Se guardaron los cambios','success');
                       this.cerrarModal('registro')
                       this.listaTicketUsuario('0')
                       return resp.msg
@@ -247,7 +231,7 @@ export class TicketsComponent implements OnInit {
                           totalPage: this.paginacion
                         }
                       this.uploadService.actualizarPDF(this.archivoPDF,this.detalle.uid)
-                      Swal.fire('Guardado','La imagen se guardo','success');
+                      Swal.fire('Guardado','Se guardaron los cambios','success');
                       this.cerrarModal('update')
                       this.listaTicketUsuario('0')
                       return resp.msg
@@ -303,9 +287,9 @@ export class TicketsComponent implements OnInit {
     
     const { uid } = data
     Swal.fire({
-      title: 'Esta seguro de eliminar este Ticket?',
+      title: 'Esta seguro de anular este Ticket?',
       showDenyButton: true,
-      confirmButtonText: 'Eliminar',
+      confirmButtonText: 'Anular',
       denyButtonText: `Cancelar`,
     }).then((result) => {
       if (result.isConfirmed) {

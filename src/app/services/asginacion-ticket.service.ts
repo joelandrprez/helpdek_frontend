@@ -33,12 +33,22 @@ export class AsginacionTicketService {
   actualizarTicketAsignado(data:any){
     return this.http.put(`${base_url}/ticket/${data.uid}`, data, this.headers)
   }
-
-
   listaAsginacionDesarrollo(paginacion:any){
     return this.http.get(`${base_url}/ticket/listaAsginacionDesarrollo?inicio=${paginacion}`, this.headers)
   }
-  actualizarTicketAsignadoDesarrollo(data:any){
-    return this.http.put(`${base_url}/ticket/desarrollo/${data.uid}`, data, this.headers)
+  listaDesarrolladoresparaAsignar(){
+    return this.http.get(`${base_url}/ticket/ListaDesarroladores`, this.headers)
+  }
+  actualizarTicketAsignadoDesarrollo(data:any,uid:any){
+    return this.http.put(`${base_url}/ticket/${uid}`, data, this.headers)
+  }
+  listaGeneralTickers(){
+    return this.http.get(`${base_url}/ticket/muestraTicketGeneral`, this.headers)
+  }
+  actualizarTicketresueltorechazado(data:any,uid:any){
+    return this.http.put(`${base_url}/ticket/desarrollo/${uid}`, data, this.headers)
+  }
+  terminarTicket(data:any,uid:any){
+    return this.http.put(`${base_url}/ticket/finticketresuelto/${uid}`, data, this.headers)
   }
 }

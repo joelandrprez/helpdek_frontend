@@ -214,7 +214,7 @@
 
 
 
-                      <button type="submit" class="btn btn-primary  btnderecha" style=>Registrar</button>
+                      <button type="submit" class="btn btn-primary  btnderecha" >Registrar</button>
 
                     </form>
                   </div>
@@ -276,16 +276,17 @@
 
 
                         <label class="col-sm-3 col-form-label">Descripcion</label>
-                        <div class="col-sm-9">
-                          
+                        <div class="col-sm-9" style="padding-bottom: 20px;">
                             <textarea class="form-control bordercustom" id="exampleTextarea1" rows="4"
                              value="{{detalle?.cdescri}}" disabled></textarea>
                         </div>
+                        
+                        <label  class="col-sm-3 col-form-label">Descripcion Final Atencion</label>
+                        <div class="col-sm-9" style="padding-bottom: 20px;">
+                          <textarea class="form-control bordercustom" id="exampleTextarea1" rows="6" disabled value="{{detalle?.cdesfin}}"></textarea>
+                        </div>
 
 
-
-
-                        <br>
                         <label class="col-sm-3 col-form-label">Archivo</label>
                         <br>
                         <div class="col-sm-9">

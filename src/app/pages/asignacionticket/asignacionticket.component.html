@@ -7,14 +7,14 @@
 
                                 <div class="card"  >
                                         <div class="card-body">
-                                          <h4 class="card-title">Asignar Ticket</h4>
-                                                <input type="text" class="form-control" style="float: right; width: 200px;" id="exampleInputUsername1" placeholder="buscar Tickets">
+                                          <h4 class="card-title">Tickets Pendientes de Asignar</h4>
+                                           
                                           <div class="table-responsive">
                                             <table aria-describedby="MyTable" class="table table-striped">
                                               <thead>
                                                 <tr>
                                                   <th scope="col">
-                                                    Acciones
+                                                    Usuario
                                                   </th>
                                                   <th scope="col">
                                                     Tipo
@@ -39,17 +39,16 @@
                                                   </th>
                                                   <th scope="col">
                                                     Progreso
-                                                  </th>                                                  
+                                                  </th>  
+                                                  <th scope="col">
+                                                    Acciones
+                                                  </th>                                                   
                                                 </tr>
                                               </thead>
                                               <tbody>
                                                 <tr *ngFor="let ticket of tickets"> 
                                                        <td class="py-1">
-                                                        <a>
-                                                          <div class="col-sm-6 col-md-4 col-lg-3">
-                                                            <i class="mdi mdi-account-search customclick" aria-hidden="true" (click)="abrirModal(ticket)"></i>  </div>
-                                                          </a>
-                                                        
+                                                                {{ticket.cusureg.cnomusu}}                                                        
                                                         </td>
                                                         <td class="py-1">
                                                                 {{ticket.ctiptic.cdesvar}}
@@ -80,69 +79,124 @@
                                                             
                                                         </td>                                                                                                             
                                                         <td>
-                                                                <div class="progress">
-                                                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 70%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-                                                                        </div>
-                                                                </div>
+                                                          <div class="progress" *ngIf="ticket.cestado === 'registrado'">
+                                                            <div class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="100"
+                                                              aria-valuemin="0" aria-valuemax="100">
+                                                            </div>
+                                                          </div>
+                                  
+                                                          <div class="progress" *ngIf="ticket.cestado === 'asignado'">
+                                                            <div class="progress-bar bg-success" role="progressbar" style="width: 50%" aria-valuenow="100"
+                                                              aria-valuemin="0" aria-valuemax="100">
+                                                            </div>
+                                                          </div>
+                                                          <div class="progress bordercustom" *ngIf="ticket.cestado === 'resuelto'">
+                                                            <div class="progress-bar bg-success " role="progressbar" style="width: 75%"
+                                                              aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                                                            </div>
+                                                          </div>
+                                                          <div class="progress " *ngIf="ticket.cestado === 'terminado'">
+                                                            <div class="progress-bar bg-success " role="progressbar" style="width: 100%"
+                                                              aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                                                            </div>
+                                                          </div>
+                                                          <div class="progress" *ngIf="ticket.cestado === 'devuelto'">
+                                                            <div class="progress-bar bg-danger" role="progressbar" style="width: 100%" aria-valuenow="100"
+                                                              aria-valuemin="0" aria-valuemax="100">
+                                                            </div>
+                                                          </div>
+                                                          <div class="progress" *ngIf="ticket.cestado === 'anulado'">
+                                                            <div class="progress-bar bg-danger" role="progressbar" style="width: 100%" aria-valuenow="100"
+                                                              aria-valuemin="0" aria-valuemax="100">
+                                                            </div>
+                                                          </div>
+                                                        </td>
+                                                        <td>
+                                                          <i title="Detalle" class="mdi mdi-view-list color-detalle" (click)="abrirModal(ticket)" aria-hidden="true"></i>
                                                         </td>
                                                       </tr>
                                               </tbody>
                                             </table>
                                           </div>
-
+                                          <!-- MODAL DESGINAR -->
                                           <div class="modal animated fadeIn" id="modal-lg" style="padding-right: 17px;" aria-modal="true" [ngClass]="show" [ngStyle]="{'display':colorEstado}"
                                           role="dialog">
                                           <div class="modal-dialog modal-lg">
                                               <div class="modal-content">
                                                   <div class="modal-header">
                                                       <h4 class="modal-title">Asignacion Ticket</h4>
-                                                      <button (click)="cerrarModal()" type="button" class="close"
+                                                      <button (click)="cerrarModal('asignar')" type="button" class="close"
                                                           data-dismiss="modal" aria-label="Close">
                                                           <span aria-hidden="true">×</span>
                                                       </button>
                                                   </div>
                                                   <div class="modal-bodyCan"> 
                                                       <div class="card-body">
-                                                              <form class="forms-sample" [formGroup]="ticketAsginacion!" (ngSubmit)="guardarTicket()">
+                                                              <form class="forms-sample" [formGroup]="ticketAsginacion!" (ngSubmit)="guardarTicket()" >
                                                                 <div class="form-group row">
                                                                   
                                                                   <label class="col-sm-3 col-form-label">Tipo :</label>
-                                                                  <label class="col-sm-3 col-form-label">{{detalle?.ctiptic.cdesvar}}</label>
+                                                                  <div class="col-sm-9">
+                                                                    <input type="text" class="form-control bordercustom" placeholder="Asunto" disabled value="{{detalleF?.ctiptic.cdesvar}}" >
+                                                                  </div>
                                                                   
                                                                   <label class="col-sm-3 col-form-label">Nombre del proyecto : </label>
-                                                                  <label class="col-sm-3 col-form-label">{{detalle?.cnompro.cnompro}}</label>
+                                                                  <div class="col-sm-9">
+                                                                    <input type="text" class="form-control bordercustom" placeholder="Asunto" disabled value="{{detalleF?.cnompro.cnompro}}">
+                                                                  </div>
 
                                                                   <label class="col-sm-3 col-form-label">Asunto : </label>
-                                                                  <label class="col-sm-3 col-form-label">{{detalle?.cdesasu}}</label>
+                                                                  <div class="col-sm-9">
+                                                                    <input type="text" class="form-control bordercustom" placeholder="Asunto" disabled value="{{detalleF?.cdesasu}}">
+                                                                  </div>
  
 
                                                                   <label class="col-sm-3 col-form-label">Prioridad : </label>
-                                                                  <label class="col-sm-3 col-form-label">{{detalle?.cpriori.cconvar}}</label>
-
-                                                                  <label class="col-sm-3 col-form-label">Descripcion : </label>
-                                                                  <label class="col-sm-9 col-form-label" [innerHtml]="valirTexto(detalle?.cdescri)"></label>
-                                                                  
-
-                                                                  <label class="col-sm-3 col-form-label">Analista : </label>
-                                                                  <select class="form-control col-sm-9" id="exampleFormControlSelect2">
-                                                                    <option>1</option>
-                                                                    <option>2</option>
-                                                                    <option>3</option>
-                                                                    <option>4</option>
-                                                                    <option>5</option>
-                                                                  </select>
-
-                                                                  <label class="col-sm-12 col-form-label">Descripcion Atencion cliente</label>
-                                                                  <div class="NgxEditor__Wrapper col-sm-12" style="width: auto;" >
-                                                                    <ngx-editor-menu [editor]="editor" [toolbar]="toolbar">
-                                                                    </ngx-editor-menu>
-                                                                    <ngx-editor [editor]="editor" formControlName="cdescri">
-                                                                    </ngx-editor>
+                                                                  <div class="col-sm-9">
+                                                                    <input type="text" class="form-control bordercustom" placeholder="Asunto" disabled value="{{detalleF?.cpriori.cconvar}}" >
                                                                   </div>
 
+                                                                  <label class="col-sm-3 col-form-label">Descripcion : </label>
+                                                                  <div class="col-sm-9" style="padding-bottom: 20px;">
+                                                                    <textarea class="form-control bordercustom" id="exampleTextarea1" rows="6" disabled value="{{detalleF?.cdescri}}" ></textarea>
+                                                                  </div>
+
+                                                                  <label class="col-sm-3 col-form-label">Analista :</label>
+                                                                  <div class="col-sm-9">
+                                                                    <select class="form-control form-control-sm bordercustom" formControlName="cdesasi">
+                                                                      <option *ngFor="let des of desarrolladores" value="{{des.uid}}">{{des.cnomusu}}</option>
+                                                                    </select>
+                                                                  </div>
+                                                                  <label class="col-sm-3 col-form-label">Dias permitidos : </label>
+                                                                  <div class="col-sm-9">
+                                                                    <input type="text" class="form-control bordercustom" placeholder="El dia en numero"  formControlName="cdiaapr">
+                                                                  </div>
+
+                                                                  <label class="col-sm-3 col-form-label">Descripcion Atencion cliente</label>
+                                                                  
+                                                                  <div class="col-sm-9" style="padding-bottom: 20px;">
+                                                                    <textarea class="form-control bordercustom"  rows="6" placeholder="En caso de Anular el Ticket por favor escriba la descripcion aqui" formControlName="cdesate"></textarea>
+                                                                  </div>
+
+                                                                  <label class="col-sm-3 col-form-label">Archivo</label>
+                                                                  <br>
+                                                                  <div class="col-sm-9">
+                                                                    <button type="button" class="btn btn-primary btn-lg btn-block "
+                                                                      (click)="abrirLink(detalleF?.carcadj)" target="_blank">
+                                                                      <i class="mdi mdi-account"></i>
+                                                                      Descargar Archivo
+                                                                    </button>
+                                                                  </div>
+                                                                  
+
                                                                 </div>
-                                                                <button type="button" class="btn btn-primary btn-rounded btn-fw" (click)="cerrarModal()">Guardar cambios</button>
-                                                                <button type="button" class="btn btn-danger btn-rounded btn-fw">Devolver Ticket</button>
+                                                                <button type="submit" class="btn btn-primary  btnderecha" (click)="actualizarTicker()" >Guardar cambios</button> 
+                                                                <div class="btnderecha">
+                                                                  <button type="button" class="btn btn-danger" >Anular Ticket</button>
+                                                                </div>
+                                                                
+
+                                                                
                                                                 <br><br>
                                                               </form>
                                                             </div>
@@ -167,4 +221,265 @@
             </div>
 
     </div>
+
+<!-- LISTA TICKER QUE YA FUERON ASIGNADO -->
+    <div class="row">
+      <div class="col-12 col-xl-12 grid-margin stretch-card">
+              <div class="row w-100 flex-grow">
+                      <div class="col-md-12 grid-margin stretch-card">
+
+                          <div class="card"  >
+                                  <div class="card-body">
+                                    <h4 class="card-title">Tickets Asignados</h4>
+                                     
+                                    <div class="table-responsive">
+                                      <table aria-describedby="MyTable" class="table table-striped">
+                                        <thead>
+                                          <tr>
+                                            <th scope="col">
+                                              Ticket
+                                            </th>
+                                            <th scope="col">
+                                              Creado por
+                                            </th>
+                                            <th scope="col">
+                                              Asignado por
+                                            </th>
+                                            <th scope="col">
+                                              Programador
+                                            </th>
+                                            
+                                            <th scope="col">
+                                              prioridad
+                                            </th>
+                                            <th scope="col">
+                                              Estado
+                                            </th>
+                                            <th scope="col">
+                                              Progreso
+                                            </th>        
+                                            <th scope="col">
+                                              Acciones
+                                            </th>                                             
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          <tr *ngFor="let ticket of ticketsTotal"> 
+                                                 <td class="py-1">
+                                                          {{ticket?.cdesasu}}                                                        
+                                                  </td>
+                                                  <td class="py-1">
+                                                    {{ticket?.cusureg.cnomusu}}
+                                                  </td>
+                                                  <td>
+                                                          {{ticket?.cateasi.cnomusu}}
+                                                  </td>
+                                                  <td class="py-1">
+                                                          {{ticket?.cdesasi.cnomusu}}
+                                                  </td>
+                                                  
+                                                  
+                                                  <td>
+                                                    <label 
+                                                    [ngStyle]="{'background-color':ticket.cpriori.cdesvar}"
+                                                    class="badge">{{ticket?.cpriori.cconvar}}  </label>
+                                                  </td>  
+                                                  <td>
+                                                    {{ticket.cestado}}
+                                                  </td>                                                                                                            
+                                                  <td>
+                                                    <div class="progress" *ngIf="ticket.cestado === 'registrado'">
+                                                      <div class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="100"
+                                                        aria-valuemin="0" aria-valuemax="100">
+                                                      </div>
+                                                    </div>
+                            
+                                                    <div class="progress" *ngIf="ticket.cestado === 'asignado'">
+                                                      <div class="progress-bar bg-success" role="progressbar" style="width: 50%" aria-valuenow="100"
+                                                        aria-valuemin="0" aria-valuemax="100">
+                                                      </div>
+                                                    </div>
+                                                    <div class="progress bordercustom" *ngIf="ticket.cestado === 'resuelto'">
+                                                      <div class="progress-bar bg-success " role="progressbar" style="width: 75%"
+                                                        aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                                                      </div>
+                                                    </div>
+                                                    <div class="progress " *ngIf="ticket.cestado === 'terminado'">
+                                                      <div class="progress-bar bg-success " role="progressbar" style="width: 100%"
+                                                        aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                                                      </div>
+                                                    </div>
+                                                    <div class="progress" *ngIf="ticket.cestado === 'devuelto'">
+                                                      <div class="progress-bar bg-danger" role="progressbar" style="width: 100%" aria-valuenow="100"
+                                                        aria-valuemin="0" aria-valuemax="100">
+                                                      </div>
+                                                    </div>
+                                                    <div class="progress" *ngIf="ticket.cestado === 'anulado'">
+                                                      <div class="progress-bar bg-danger" role="progressbar" style="width: 100%" aria-valuenow="100"
+                                                        aria-valuemin="0" aria-valuemax="100">
+                                                      </div>
+                                                    </div>
+                                                  </td>
+                                                  <td>
+                                                    <i *ngIf="ticket.cestado === 'resuelto'" title="Terminar Ticket" class="mdi mdi-check color-succes" aria-hidden="true" (click)="abrirModalFin(ticket)"></i>
+                                                    <i  title="Detalle" class="mdi mdi-view-list color-detalle" aria-hidden="true" (click)="abrirModalDetalle(ticket)" ></i>
+                                                  </td>
+                                                </tr>
+                                        </tbody>
+                                      </table>
+                                    </div>
+
+                                  </div>
+                                  
+                          </div>
+                          <!-- MODAL DETALLE -->
+                          <div class="modal animated fadeIn" id="modal-lg" style="padding-right: 17px;" aria-modal="true" [ngClass]="showUpdate" [ngStyle]="{'display':colorEstadoUpdate}"
+                          role="dialog">
+                          <div class="modal-dialog modal-lg">
+                              <div class="modal-content">
+                                  <div class="modal-header">
+                                      <h4 class="modal-title">Detalle Ticket</h4>
+                                      <button (click)="cerrarModal('detalle')" type="button" class="close"
+                                          data-dismiss="modal" aria-label="Close">
+                                          <span aria-hidden="true">×</span>
+                                      </button>
+                                  </div>
+                                  <div class="modal-bodyCan"> 
+                                      <div class="card-body">
+                                              <form class="forms-sample" >
+                                                <div class="form-group row">
+                                                  
+                                                  <label class="col-sm-3 col-form-label">Tipo :</label>
+                                                  <div class="col-sm-9">
+                                                    <input type="text" class="form-control bordercustom" placeholder="Asunto" disabled value="{{detalle?.ctiptic.cdesvar}}" >
+                                                  </div>
+                                                  
+                                                  <label class="col-sm-3 col-form-label">Nombre del proyecto : </label>
+                                                  <div class="col-sm-9">
+                                                    <input type="text" class="form-control bordercustom" placeholder="Asunto" disabled value="{{detalle?.cnompro.cnompro}}">
+                                                  </div>
+
+                                                  <label class="col-sm-3 col-form-label">Asunto : </label>
+                                                  <div class="col-sm-9">
+                                                    <input type="text" class="form-control bordercustom" placeholder="Asunto" disabled value="{{detalle?.cdesasu}}">
+                                                  </div>
+
+
+                                                  <label class="col-sm-3 col-form-label">Prioridad : </label>
+                                                  <div class="col-sm-9">
+                                                    <input type="text" class="form-control bordercustom" placeholder="Asunto" disabled value="{{detalle?.cpriori.cconvar}}" >
+                                                  </div>
+
+                                                  <label class="col-sm-3 col-form-label">Descripcion : </label>
+                                                  <div class="col-sm-9" style="padding-bottom: 20px;">
+                                                    <textarea class="form-control bordercustom" id="exampleTextarea1" rows="6" disabled value="{{detalle?.cdescri}}" ></textarea>
+                                                  </div>
+
+                                                  <label class="col-sm-3 col-form-label">Atencion al cliente :</label>
+                                                  <div class="col-sm-9">
+                                                    <input type="text" class="form-control bordercustom" placeholder="El dia en numero" disabled value="{{detalle?.cateasi.cnomusu}}" >
+                                                  </div>
+                                                  <label class="col-sm-3 col-form-label">Dias permitidos : </label>
+                                                  <div class="col-sm-9">
+                                                    <input type="text" class="form-control bordercustom" placeholder="El dia en numero" disabled value="{{detalle?.cdiaapr}}" >
+                                                  </div>
+
+                                                  <label class="col-sm-3 col-form-label">Descripcion Atencion cliente</label>
+                                                  
+                                                  <div class="col-sm-9" style="padding-bottom: 20px;">
+                                                    <textarea class="form-control bordercustom" id="exampleTextarea1" rows="6" disabled value="{{detalle?.cdesate}}"></textarea>
+                                                  </div>
+                                                  <label class="col-sm-3 col-form-label">Desarrollador Asignado : </label>
+                                                  <div class="col-sm-9">
+                                                    <input type="text" class="form-control bordercustom" disabled value="{{detalle?.cdesasi.cnomusu}}" >
+                                                  </div>
+                                                  
+                                                  <label class="col-sm-3 col-form-label">Descripcion Desarrollo</label>
+                                                  <div class="col-sm-9" style="padding-bottom: 20px;">
+                                                    <textarea class="form-control bordercustom" id="exampleTextarea1" rows="6" disabled value="{{detalle?.cdesdes}}"></textarea>
+                                                  </div>
+                                                  <label class="col-sm-3 col-form-label">Descripcion Final Atencion</label>
+                                                  <div class="col-sm-9" style="padding-bottom: 20px;">
+                                                    <textarea class="form-control bordercustom" id="exampleTextarea1" rows="6" disabled value="{{detalle?.cdesfin}}"></textarea>
+                                                  </div>
+
+                                                  <label class="col-sm-3 col-form-label">Archivo</label>
+                                                  <br>
+                                                  <div class="col-sm-9">
+                                                    <button type="button" class="btn btn-primary btn-lg btn-block "
+                                                      (click)="abrirLink(detalle?.carcadj)" target="_blank">
+                                                      <i class="mdi mdi-account"></i>
+                                                      Descargar Archivo
+                                                    </button>
+                                                  </div>
+                                                  
+
+                                                </div>
+                                              </form>
+                                            </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                      <h5 class="modal-title">Recuerde validar los datos</h5>
+                                  </div>
+
+                              </div>
+                              <!-- /.modal-content -->
+                          </div>
+                          <!-- /.modal-dialog -->
+                          </div>
+
+                          <!-- MODAL TERMINAR CICLO TICKET -->
+                          <div class="modal animated fadeIn" id="modal-lg" style="padding-right: 17px;" aria-modal="true" [ngClass]="showFin" [ngStyle]="{'display':colorEstadoFin}"
+                          role="dialog">
+                          <div class="modal-dialog modal-lg">
+                              <div class="modal-content">
+                                  <div class="modal-header">
+                                      <h4 class="modal-title">Terminar Ticket</h4>
+                                      <button (click)="cerrarModal('terminar')" type="button" class="close"
+                                          data-dismiss="modal" aria-label="Close">
+                                          <span aria-hidden="true">×</span>
+                                      </button>
+                                  </div>
+                                  <div class="modal-bodyFin"> 
+                                      <div class="card-body">
+                                              <form class="forms-sample" [formGroup]="ticketFinalizar!" (ngSubmit)="terminarTicket()" >
+                                                <div class="form-group row">
+
+                                                  <label class="col-sm-3 col-form-label">Descripcion Final del Ticket</label>
+                                                  
+                                                  <div class="col-sm-9" style="padding-bottom: 20px;">
+                                                    <textarea class="form-control bordercustom" id="exampleTextarea1" rows="6" formControlName="cdesfin"></textarea>
+                                                  </div>
+                                                  
+                                                </div>
+                                                <button type="submit" class="btn btn-primary btn-icon-text btnderecha">
+                                                  <i class="mdi mdi-file-check btn-icon-prepend"></i>
+                                                  Terminar
+
+                                                </button>
+                                                <br>
+                                              </form>
+                                            </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                      <h5 class="modal-title">Recuerde validar los datos</h5>
+                                  </div>
+
+                              </div>
+                              <!-- /.modal-content -->
+                          </div>
+                          <!-- /.modal-dialog -->
+                          </div>
+
+
+
+
+
+                      </div>
+
+
+              </div>
+      </div>
+
+</div>
 </div>

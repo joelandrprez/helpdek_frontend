@@ -10,6 +10,10 @@
     height: 550px;
     overflow-y: auto;
 }
+.modal-bodyFin{
+    height: 240px;
+    overflow-y: auto;
+}
 
 .centrarCaja {
 
@@ -17,6 +21,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-
-
+}
+.btnderecha{
+    float: right;
+    padding-right: 15px;
 }
