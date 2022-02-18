@@ -122,4 +122,18 @@
   .color-succes{
     color: #00d082;
   }
-  
+  .color-devolver{
+    color:#f83e37;
+  }
+  .btnderecha{
+    float: right;
+}
+  .centrarCaja {
+
+  /*IMPORTANTE*/
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+
+}

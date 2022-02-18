@@ -19,6 +19,7 @@ import { VariablesComponent } from './mantenimiento/variables/variables.componen
 import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AsignacionticketComponent } from './asignacionticket/asignacionticket.component';
+import { NotificacionesComponent } from './notificaciones/notificaciones.component';
 
 
 
@@ -34,7 +35,8 @@ import { AsignacionticketComponent } from './asignacionticket/asignacionticket.c
     TicketsComponent,
     TicketsasginadosComponent,
     ProyectosComponent,
-    AsignacionticketComponent
+    AsignacionticketComponent,
+    NotificacionesComponent
   ],
   exports: [
     PagesComponent,
@@ -47,7 +49,8 @@ import { AsignacionticketComponent } from './asignacionticket/asignacionticket.c
     TicketsComponent,
     TicketsasginadosComponent,
     ProyectosComponent,
-    AsignacionticketComponent
+    AsignacionticketComponent,
+    NotificacionesComponent
   ],
   imports: [
     NgxLightPaginationModule,

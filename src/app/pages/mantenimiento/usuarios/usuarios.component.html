@@ -9,13 +9,19 @@
                                           <h4 class="card-title">Mantenimiento de Usuarios</h4>
                                           <br>
                                                 
-                                                <button type="button" class="btn btn-success btn-icon-text" >
-                                                        <i class="mdi mdi-alert mdi-file-plus" aria-hidden="true"></i>                                                    
+                                                <button type="button" class="btn btn-success btn-icon-text" (click)="abrilModal('Registro')">
+                                                        <i class="mdi mdi-alert mdi-file-plus" aria-hidden="true" ></i>                                                    
                                                         Agregar Usuario
                                                 </button>
 
 
-                                                <input type="text" class="form-control" style="float: right; width: 200px;" id="exampleInputUsername1" placeholder="Buscar Usuarios">
+                                                <input type="text" class="form-control bordercustom" 
+                                                                   style="float: right; width: 200px;" 
+                                                                   id="exampleInputUsername1" 
+                                                                   placeholder="Buscar Usuarios"
+                                                                   (keyup)="busquedaUsuario(txtTermino.value)"  
+                                                                  #txtTermino
+                                                                   >
                                           <br>
                                           <div class="table-responsive">
                                             <table aria-describedby="myTable" class="table table-striped">
@@ -64,9 +70,8 @@
                                                         <td>
                                                             {{lstUsu.cestusu}}
                                                         </td>                                                                                                               
-                                                        <td>    <i title="Detalle" class="mdi mdi-view-list color-detalle" aria-hidden="true"></i>
-                                                                <i title="Editar" class="mdi mdi-pencil-box-outline color-editar" aria-hidden="true"></i>
-                                                                <i title="Eliminar" class="mdi mdi-delete-forever color-eliminar" aria-hidden="true"></i>
+                                                        <td>    <i title="Detalle" class="mdi mdi-view-list color-detalle" aria-hidden="true" (click)="abrilModal('Detalle',lstUsu)"></i>
+                                                                <i title="Editar" class="mdi mdi-pencil-box-outline color-editar" aria-hidden="true" (click)="abrilModal('Editar',lstUsu)"></i>
                                                         </td>
                                                       </tr>
                                               </tbody>
@@ -94,6 +99,100 @@
                                           </div>
           
                                           <!-- /.row -->
+                                      </div>
+                                      <div class="modal animated fadeIn" id="modal-lg" style="padding-right: 17px;" aria-modal="true" [ngClass]="show" [ngStyle]="{'display':colorEstado}"
+                                      role="dialog">
+                                      <div class="modal-dialog modal-lg">
+                                          <div class="modal-content">
+                                              <div class="modal-header">
+                                                  <h4 class="modal-title">{{tituloModal}} Usuario</h4>
+                                                  <button (click)="cerrarModal()" type="button" class="close"
+                                                      data-dismiss="modal" aria-label="Close">
+                                                      <span aria-hidden="true">×</span>
+                                                  </button>
+                                              </div>
+                                              <div [ngClass]="tituloModal == 'Detalle' ? 'modal-bodydet' : 'modal-body'"> 
+                                                  <div class="card-body">
+                                                          <form class="forms-sample" [formGroup]="usuarioRegistro!" (ngSubmit)="guardarUsuario()">
+                                                            <div class="form-group row">
+                                                              <label class="col-sm-3 col-form-label ">Correo</label>
+                                                              <div class="col-sm-9">
+                                                                <input type="text" class="form-control bordercustom"  formControlName="ccorusu" value="{{detalle?.ccorusu}}">
+                                                              </div>
+                                                              <label class="col-sm-3 col-form-label ">Nro de Documento</label>
+                                                              <div class="col-sm-9">
+                                                                <input type="text" class="form-control bordercustom"  formControlName="cnudoci" value="{{detalle?.cnudoci}}">
+                                                              </div>
+                                                              <label class="col-sm-3 col-form-label ">Nombres :</label>
+                                                              <div class="col-sm-9">
+                                                                <input type="text" class="form-control bordercustom"  formControlName="cnomusu" value="{{detalle?.cnomusu}}">
+                                                              </div>
+                                                              <label class="col-sm-3 col-form-label ">Apellidos</label>
+                                                              <div class="col-sm-9">
+                                                                <input type="text" class="form-control bordercustom"  formControlName="capeusu" value="{{detalle?.capeusu}}">
+                                                              </div>
+                                                              <label class="col-sm-3 col-form-label ">Contraseña</label>
+                                                              <div class="col-sm-9">
+                                                                <input type="text" class="form-control bordercustom"  formControlName="cpaswor" value="{{detalle?.cpaswor}}">
+                                                              </div>
+                                                              <label class="col-sm-3 col-form-label ">Estado</label>
+                                                              <div class="col-sm-9">
+                                                                <select *ngIf="tituloModal==='Editar' || tituloModal==='Registro'" class="form-control form-control-sm bordercustom" formControlName="cestusu">
+                                                                  <option value="true">Activo</option>
+                                                                  <option value="false">Inactivo</option>
+                                                                </select>
+                                                                <select  *ngIf="tituloModal==='Detalle'" class="form-control form-control-sm bordercustom" disabled value="{{detalle?.cestusu}}">
+                                                                  <option value="true">Activo</option>
+                                                                  <option value="false">Inactivo</option>
+
+                                                                </select>
+
+                                                              </div>
+                                                              <label class="col-sm-3 col-form-label ">Categoria</label>
+                                                              <div class="col-sm-9">
+                                                                <select *ngIf="tituloModal==='Editar' || tituloModal==='Registro'" class="form-control form-control-sm bordercustom" formControlName="ccodcat">
+                                                                  <option value="CLIENTE">CLIENTE</option>
+                                                                  <option value="ADMINISTRADOR">ADMINISTRADOR</option>
+                                                                  <option value="ATENCION AL CLIENTE">ATENCION AL CLIENTE</option>
+                                                                  <option value="DESARROLLADOR">DESARROLLADOR</option>
+
+                                                                </select>
+                                                                <select *ngIf="tituloModal==='Detalle'" class="form-control form-control-sm bordercustom" disabled value="{{detalle?.ccodcat}}">
+                                                                  <option value="CLIENTE">CLIENTE</option>
+                                                                  <option value="ADMINISTRADOR">ADMINISTRADOR</option>
+                                                                  <option value="ATENCION AL CLIENTE">ATENCION AL CLIENTE</option>
+                                                                  <option value="DESARROLLADOR">DESARROLLADOR</option>
+
+                                                                </select>
+                                                              </div>
+                                                              <label class="col-sm-3 col-form-label ">Direccion del usuarios</label>
+                                                              <div class="col-sm-9">
+                                                                <input type="text" class="form-control bordercustom"  formControlName="cdirusu" value="{{detalle?.cdirusu}}">
+                                                              </div>
+                                                              <label class="col-sm-3 col-form-label ">Sexo</label>
+                                                              <div class="col-sm-9">
+                                                                <input type="text" class="form-control bordercustom"  formControlName="csexusu" value="{{detalle?.csexusu}}">
+                                                              </div>
+                                                              <label class="col-sm-3 col-form-label ">Fecha de nacimiento</label>
+                                                              <div class="col-sm-9">
+                                                                <input type="text" class="form-control bordercustom"  formControlName="dfecnac" value="{{detalle?.dfecnac}}">
+                                                              </div>
+
+                                                            </div>
+
+                                                            <button *ngIf="tituloModal!=='Detalle'" type="submit" class="btn btn-primary  btnderecha" >Guardar Cambios</button>
+                                                            
+                                                          </form>
+                                                        </div>
+                                              </div>
+                                              <div class="modal-footer">
+                                                  <h5 class="modal-title">Recuerde validar los datos</h5>
+                                              </div>
+      
+                                          </div>
+                                          <!-- /.modal-content -->
+                                      </div>
+                                      <!-- /.modal-dialog -->
                                       </div>
                                 </div>
                             </div>

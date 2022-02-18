@@ -6,59 +6,12 @@
                                 <div class="col-md-12 grid-margin stretch-card">
                                         <div class="card">
                                                 <div class="card-body">
-                                                        <h4 class="card-title">Historial</h4>
+                                                        <h4 class="card-title">Historial notificaciones</h4>
+                                                        
                                                         <div class="row">
                                                                 <div class="col-md-12">
-                                                                        <div class="table-responsive">
-                                                                                <table aria-describedby="myTable" class="table table-striped">
-                                                                                        <thead>
-                                                                                          <tr>
-                                                                                            <th scope="col">
-                                                                                              Tipo
-                                                                                            </th>
-                                                                                            <th scope="col">
-                                                                                              Nombre del proyecto
-                                                                                            </th>
-                                                                                            <th scope="col">
-                                                                                              Asunto
-                                                                                            </th>                                                 
-                                                                                            <th scope="col">
-                                                                                              detalle
-                                                                                            </th>
-                                                                                            <th scope="col">
-                                                                                              fecha
-                                                                                            </th>    
-                                                                                            
-                                                                                            <th scope="col">
-                                                                                                Estado
-                                                                                              </th>                                              
-                                                                                          </tr>
-                                                                                        </thead>
-                                                                                        <tbody>
-                                                                                          <tr>
-                                                                                                 
-                                                                                                  <td class="py-1">
-                                                                                                          CORRECCION
-                                                                                                  </td>
-                                                                                                  <td>
-                                                                                                          CAMBIO DE BOTON
-                                                                                                  </td>
-                                                                                                  <td>
-                                                                                                          Se nesecita cambiar el estilo del boton
-                                                                                                  </td>
-                                                                                                  <td>
-                                                                                                         Se acepto el ticket y fue derivado al area de desarrollo
-                                                                                                  </td>
-                                                                                                  <td>
-                                                                                                        2021-01-27
-                                                                                                  </td> 
-                                                                                                  <td>
-                                                                                                          ASIGNADO
-                                                                                                      
-                                                                                                  </td> 
-                                                                                                </tr>
-                                                                                        </tbody>
-                                                                                      </table>
+                                                                        <div *ngFor="let not of notificaciones"  class="alert alert-primary" style="background-color: #CCE5FF;" role="alert">
+                                                                                {{not.cmsgnot}} ({{not.cnomtic}}) : {{not.dfecmod}}
                                                                         </div>
 
                                                                 </div>

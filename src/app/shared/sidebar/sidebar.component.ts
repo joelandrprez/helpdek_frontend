@@ -12,10 +12,7 @@ export class SidebarComponent implements OnInit {
 
   constructor(public menuService:MenuService,
               private auth:LoginService) {
-
- 
-    
-      
+                
    }
 
   ngOnInit(): void {

@@ -38,11 +38,13 @@ export class AsignacionticketComponent implements OnInit {
   editor!: Editor;
   toolbar!: Toolbar; 
 
+  public tituloFormulario:any;
+
   // Lista Desarrolladores
   public desarrolladores:any=[]
 
   //lista Ticket General
-  public ticketsTotal:any=[]
+  public ticketsTotal?:any=[]
 
   constructor(private asignacionServices:AsginacionTicketService,
               private sanitizer: DomSanitizer,
@@ -69,18 +71,24 @@ export class AsignacionticketComponent implements OnInit {
                               
                             })
   }
+
   ListarTicketyaAsignados(){
     this.asignacionServices.listaGeneralTickers()
                             .subscribe((resp:any)=>{
+                              console.log(resp.data);
+                              console.log(resp);
+                              
                               this.ticketsTotal = resp.data
                               
                             })
   }
+
   valirTexto(cade:any){
     this.desc = this.sanitizer.bypassSecurityTrustHtml(cade)
    
     return this.desc;
   }
+
   cerrarModal(tipo:string){
     if(tipo === 'asignar'){
       this.colorEstado='';
@@ -98,6 +106,7 @@ export class AsignacionticketComponent implements OnInit {
   guardarTicket(){
 
   }
+
   abrirModal(data:any){
     this.detalleF = data
     this.colorEstado='block';
@@ -105,6 +114,7 @@ export class AsignacionticketComponent implements OnInit {
     this.listaDesarrolladores();
     console.log(this.detalleF);
   }
+
   abrirModalDetalle(data:any){
     this.detalle = data;
     this.colorEstadoUpdate='block';
@@ -113,15 +123,23 @@ export class AsignacionticketComponent implements OnInit {
     
     this.listaDesarrolladores();
   }
-  abrirModalFin(data:any){
+
+  abrirModalFin(data:any,cadena:string){
+    if(cadena==='terminar'){
+      this.tituloFormulario = 'Terminar'
+    }
+    if(cadena==='pendiente por devolver'){
+      this.tituloFormulario = 'Devolver'
+    }
     this.detalleE = data
-    this.colorEstadoFin='block';
-    this.showFin = 'show';
-    this.ticketFinalizar = this.fb.group({
-      cdesfin:[this.detalleE.cdesfin,Validators.requiredTrue]
-    })
-    this.listaDesarrolladores();
-    console.log(this.detalleE);
+      this.colorEstadoFin='block';
+      this.showFin = 'show';
+      this.ticketFinalizar = this.fb.group({
+        cdesfin:[this.detalleE.cdesfin,Validators.requiredTrue]
+      })
+      this.listaDesarrolladores();
+      console.log(this.detalleE);
+
 
   }
 
@@ -129,13 +147,15 @@ export class AsignacionticketComponent implements OnInit {
     this.asignacionServices.listaDesarrolladoresparaAsignar()
                            .subscribe((resp:any) =>{
                              this.desarrolladores = resp.data
-                            console.log(resp.data);
+                            console.log(resp);
                             
                            })
   }
+
   abrirLink(url: string){
     window.open(`${environment.base_url}/proyecto/pdf/${url}`, "_blank");
   }
+
   actualizarTicker(){
 
     const data = {...this.ticketAsginacion?.value}
@@ -167,38 +187,120 @@ export class AsignacionticketComponent implements OnInit {
       }
     })
 
-
-
-
   }
-  terminarTicket(){
-    const data = {...this.ticketFinalizar?.value}
 
-    Swal.fire({
-      title: 'Esta Seguro de terminar el Ticket?',
-      text: "Despues de dar esta conformidad no se podra realizar cambios!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Si, terminar!'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.asignacionServices.terminarTicket(data,this.detalleE.uid)
+  terminarTicket(dat:any){
+    console.log(dat);
+
+    
+    const data = {...this.ticketFinalizar?.value}
+    if(dat === 'Devolver'){
+      data.cestado ='devuelto'
+      console.log(data);
+      
+      Swal.fire({
+        title: 'Esta Seguro de terminar el Ticket?',
+        text: "Despues de dar esta conformidad no se podra realizar cambios!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, devolver!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.asignacionServices.terminarTicket(data,this.detalleE.uid)
+                                 .subscribe((resp:any)=>{
+                                   console.log(resp);
+                                   
+                                  this.listaTicketRegistrado();
+                                  this.cerrarModal('terminar')
+          })
+          
+          Swal.fire(
+            'Se concluyo el Ticket!',
+            'Tu Ticket fue devolver.',
+            'success'
+          )
+        }
+      })
+    }
+    else if(dat==='Terminar'){
+      
+      data.cestado ='terminado'
+      Swal.fire({
+        title: 'Esta Seguro de terminar el Ticket?',
+        text: "Despues de dar esta conformidad no se podra realizar cambios!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, terminar!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.asignacionServices.terminarTicket(data,this.detalleE.uid)
+                                 .subscribe((resp:any)=>{
+                                  this.listaTicketRegistrado();
+                                  this.cerrarModal('terminar')
+          })
+          
+          Swal.fire(
+            'Se concluyo el Ticket!',
+            'Tu Ticket fue terminado.',
+            'success'
+          )
+        }
+      })
+    }
+
+    
+    
+  }
+
+  devolverTicket(){
+    const data = {...this.ticketAsginacion?.value}
+    const obj:any = {}
+    obj.cestado ='devuelto'
+    obj.cdesfin = data.cdesate
+
+    console.log(data);
+    
+    console.log(this.detalleF);
+
+    
+    if(data.cdesate.length===0){
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Debe llenar una descripcion para devolver este ticket!'
+      })
+    }
+    else{
+      Swal.fire({
+        title: 'Esta Seguro de devolver este ticket?',
+        text: "Despues de dar esta conformidad no se podra realizar cambios!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, terminar!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.asignacionServices.terminarTicket(obj,this.detalleF.uid)
                                .subscribe((resp:any)=>{
+                                 console.log(resp);
+                                 
                                 this.listaTicketRegistrado();
-                                this.cerrarModal('terminar')
-        })
-        
-        Swal.fire(
-          'Se concluyo el Ticket!',
-          'Tu Ticket fue terminado.',
-          'success'
-        )
-      }
-    })
-    
-    
+                                this.cerrarModal('asignar')
+          })
+          Swal.fire(
+            'Se concluyo el Ticket!',
+            'Tu Ticket fue devuelto.',
+            'success'
+          )
+        }
+      })
+    }
+
   }
 
 

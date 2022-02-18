@@ -33,6 +33,12 @@ export class UsuariosService {
   }
   guardarUsuario(data:any){
     return this.http.post(`${base_url}/usuarios`, data, this.headers)
+  } 
+  actualizarUsuario(data:any,uid:any){
+    return this.http.put(`${base_url}/usuarios/${uid}`, data, this.headers)
+  }
+  buscarUsuario(termino:any){
+    return this.http.get(`${base_url}/usuarios/clientes/${termino}?inicio=0`, this.headers)
   }
 
 

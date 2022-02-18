@@ -113,6 +113,8 @@ export class TicketsComponent implements OnInit {
   abrirModalDetalle(data:any){
     this.ticketRegistro?.reset();
     this.detalle = data
+    console.log(this.detalle);
+    
     this.colorEstadoDetalle='block';
     this.showDetalle = 'show';
   }

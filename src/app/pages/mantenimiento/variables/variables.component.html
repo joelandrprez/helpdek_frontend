@@ -10,7 +10,7 @@
 
                                                               <input type="text" class="form-control" style="float: right; width: 200px;" id="exampleInputUsername1" >
                                                         <br>
-                                                        <button type="button" class="btn btn-success btn-icon-text" (click)="abrilModal()">
+                                                        <button type="button" class="btn btn-success btn-icon-text" (click)="abrilModal('Registro')">
                                                                 <i class="mdi mdi-alert mdi-file-plus"></i>                                                    
                                                                 Agregar Variable
                                                         </button>
@@ -32,7 +32,7 @@
                                                                                               Fecha
                                                                                             </th>
                                                                                             <th scope="col">
-
+                                                                                              Acciones
                                                                                             </th>                       
                                                                                           </tr>
                                                                                         </thead>
@@ -40,63 +40,84 @@
                                                                                           <tr *ngFor="let variable of variables">
                                                                                                  
                                                                                                   <td class="py-1">
-                                                                                                        <input type="text" class="form-control bordercustom" placeholder="Asunto" value="{{variable.cconvar}}">
-                                                                                                          
+                                                                                                        {{variable.cconvar}}
                                                                                                   </td>
                                                                                                   <td>
-                                                                                                        <input type="text" class="form-control bordercustom" placeholder="Asunto" value="{{variable.cdesvar}}">
-                                                                                                        
+                                                                                                        {{variable.cdesvar}}
                                                                                                   </td>
                                                                                                   <td>
-                                                                                                        <input type="text" class="form-control bordercustom" placeholder="Asunto" value="{{variable.cnomvar}}">
-                                                                                                        
+                                                                                                        {{variable.cnomvar}}
                                                                                                   </td>
                                                                                                   
                                                                                                   <td>
                                                                                                         {{variable.dfecmod}}
                                                                                                   </td> 
+                                                                                                  <td>
+                                                                                                    <i title="Detalle" class="mdi mdi-view-list color-detalle" 
+                                                                                                    aria-hidden="true"  (click)="abrilModal('Detalle',variable)"></i>
+                                                                                                    <i title="Editar" class="mdi mdi-pencil-box-outline color-editar" aria-hidden="true"  (click)="abrilModal('Editar',variable)"></i>
+                                                                                              </td> 
                                                                                                 </tr>
                                                                                         </tbody>
                                                                                       </table>
+                                                                                      
                                                                         </div>
+                                                                        <div class="row">
+                                                                                        <div class="col-sm-12 centrarCaja">
+                                                                                                <div class="description-block border-right ">
+                                                                                                        <ul class="pagination ">
+                                
+                                
+                                                                                                                <ngx-light-pagination
+                                                                                                                        [color]="themeColor"
+                                                                                                                        [paginationData]="paginationMeta"
+                                                                                                                        (onPageChange)="paginationEvents($event)">
+                                                                                                                </ngx-light-pagination>
+                                
+                                
+                                                                                                        </ul>
+                                
+                                                                                                </div>
+                                
+                                                                                                <!-- /.description-block -->
+                                                                                        </div>
+                                
+                                                                                        <!-- /.row -->
+                                                                                        </div>
                                                                         <div class="modal animated fadeIn" id="modal-lg" style="padding-right: 17px;" aria-modal="true" [ngClass]="show" [ngStyle]="{'display':colorEstado}"
                                                                     role="dialog">
                                                                     <div class="modal-dialog modal-lg">
                                                                         <div class="modal-content">
                                                                             <div class="modal-header">
-                                                                                <h4 class="modal-title">Registro Proyecto</h4>
+                                                                                <h4 class="modal-title">{{tituloModal}} Proyecto</h4>
                                                                                 <button (click)="cerrarModal()" type="button" class="close"
                                                                                     data-dismiss="modal" aria-label="Close">
                                                                                     <span aria-hidden="true">×</span>
                                                                                 </button>
                                                                             </div>
-                                                                            <div class="modal-bodyCan"> 
+                                                                            <div [ngClass]="tituloModal == 'Detalle' ? 'modal-bodydet' : 'modal-body'"> 
                                                                                 <div class="card-body">
                                                                                         <form class="forms-sample" [formGroup]="variableRegistro!" (ngSubmit)="guardarVariables()">
                                                                                           <div class="form-group row">
                                                                                                 <label class="col-sm-3 col-form-label ">Contenido</label>
                                                                                                 <div class="col-sm-9">
-                                                                                                  <input type="text" class="form-control bordercustom" placeholder="Contenido de la variable" formControlName="cconvar">
+                                                                                                  <input type="text" class="form-control bordercustom" placeholder="Contenido de la variable" formControlName="cconvar" value="{{detalle?.cconvar}}">
                                                                                                 </div>
                                                                                                 <label class="col-sm-3 col-form-label ">Nombre</label>
                                                                                                 <div class="col-sm-9">
-                                                                                                  <input type="text" class="form-control bordercustom" placeholder="Nombre de la Variable" formControlName="cnomvar">
+                                                                                                  <input type="text" class="form-control bordercustom" placeholder="Nombre de la Variable" formControlName="cnomvar" value="{{detalle?.cnomvar}}">
                                                                                                 </div>
                                                                                                 <label class="col-sm-3 col-form-label ">Descripcion</label>
                                                                                                 <div class="col-sm-9">
-                                                                                                  <input type="text" class="form-control bordercustom" placeholder="Descripcion" formControlName="cdesvar">
+                                                                                                  <input type="text" class="form-control bordercustom" placeholder="Descripcion" formControlName="cdesvar" value="{{detalle?.cdesvar}}">
                                                                                                 </div>
                                                                                                 <label class="col-sm-3 col-form-label ">Tipo</label>
                                                                                                 <div class="col-sm-9">
-                                                                                                  <input type="text" class="form-control bordercustom" placeholder="Tipo de variable" formControlName="ctipvar">
+                                                                                                  <input type="text" class="form-control bordercustom" placeholder="Tipo de variable" formControlName="ctipvar" value="{{detalle?.ctipvar}}">
                                                                                                 </div>
 
-                                                                                                                                                                                               
- 
-                          
                                                                                           </div>
-                                                                                          <button type="button" class="btn btn-primary btn-rounded btn-fw" >Guardar</button>
-                                                                                          <button type="button" class="btn btn-danger btn-rounded btn-fw" (click)="cerrarModal()">Cancelar</button>
+                                                                                          <button *ngIf="tituloModal!=='Detalle'" type="submit" class="btn btn-primary  btnderecha" >Guardar Cambios</button>
                                                                                           <br><br>
                                                                                         </form>
                                                                                       </div>

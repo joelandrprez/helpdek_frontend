@@ -40,6 +40,7 @@ export class LoginService {
                     .pipe(
                           tap(  (res:any) => {
                             this.guardarLocalMenu(res.token,res.menu);
+                            
                             this.usuario = res.usuario
                             
                             

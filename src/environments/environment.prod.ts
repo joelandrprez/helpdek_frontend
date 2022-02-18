@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  base_url:'https://plataformahelpdesk.herokuapp.com/api',
-  recuperacion_url:'https://plataformahelpdesk.herokuapp.com/recuperarContrasena/',
+  base_url:'http://localhost:3000/api/',
+  recuperacion_url:'http://localhost:3000/api/login/restaurarContrasena',
 };

@@ -48,34 +48,34 @@
                                               <tbody>
                                                 <tr *ngFor="let ticket of tickets"> 
                                                        <td class="py-1">
-                                                                {{ticket.cusureg.cnomusu}}                                                        
+                                                                {{ticket?.cusureg.cnomusu}}                                                        
                                                         </td>
                                                         <td class="py-1">
-                                                                {{ticket.ctiptic.cdesvar}}
+                                                                {{ticket?.ctiptic.cdesvar}}
                                                         </td>
                                                         <td>
-                                                                {{ticket.cnompro.cnompro}}
+                                                                {{ticket!.cnompro?.cnompro}}
                                                         </td>
                                                         <td>
-                                                                {{ticket.cdesasu}}
+                                                                {{ticket?.cdesasu}}
                                                         </td>
                                                         <td>
                                                                 
-                                                                <div class="rejilla" style="max-width: auto;" [innerHtml]="valirTexto(ticket.cdescri)"></div>
+                                                                <div class="rejilla" style="max-width: auto;" [innerHtml]="valirTexto(ticket?.cdescri)"></div>
                                                         </td>
                                                         <td >
                                                           
                                                           
                                                           
                                                           <label 
-                                                          [ngStyle]="{'background-color':ticket.cpriori.cdesvar}"
-                                                          class="badge">{{ticket.cpriori.cconvar}}  </label>
+                                                          [ngStyle]="{'background-color':ticket?.cpriori.cdesvar}"
+                                                          class="badge">{{ticket?.cpriori.cconvar}}  </label>
                                                         </td>
                                                         <td>
-                                                            {{ticket.dfecreg}}
+                                                            {{ticket?.dfecreg}}
                                                         </td>   
                                                         <td>
-                                                                {{ticket.cestado}}
+                                                                {{ticket?.cestado}}
                                                             
                                                         </td>                                                                                                             
                                                         <td>
@@ -164,7 +164,7 @@
                                                                   <label class="col-sm-3 col-form-label">Analista :</label>
                                                                   <div class="col-sm-9">
                                                                     <select class="form-control form-control-sm bordercustom" formControlName="cdesasi">
-                                                                      <option *ngFor="let des of desarrolladores" value="{{des.uid}}">{{des.cnomusu}}</option>
+                                                                      <option *ngFor="let des of desarrolladores" value="{{des.uid}}">{{des?.cnomusu}}</option>
                                                                     </select>
                                                                   </div>
                                                                   <label class="col-sm-3 col-form-label">Dias permitidos : </label>
@@ -192,7 +192,7 @@
                                                                 </div>
                                                                 <button type="submit" class="btn btn-primary  btnderecha" (click)="actualizarTicker()" >Guardar cambios</button> 
                                                                 <div class="btnderecha">
-                                                                  <button type="button" class="btn btn-danger" >Anular Ticket</button>
+                                                                  <button type="button" class="btn btn-danger" (click)="devolverTicket()">Anular Ticket</button>
                                                                 </div>
                                                                 
 
@@ -239,8 +239,12 @@
                                             <th scope="col">
                                               Ticket
                                             </th>
+                                            
                                             <th scope="col">
                                               Creado por
+                                            </th>
+                                            <th scope="col">
+                                              Categoria de Asi
                                             </th>
                                             <th scope="col">
                                               Asignado por
@@ -269,16 +273,20 @@
                                                           {{ticket?.cdesasu}}                                                        
                                                   </td>
                                                   <td class="py-1">
-                                                    {{ticket?.cusureg.cnomusu}}
+                                                    
+                                                    {{ticket.cusureg!.cnomusu}}
                                                   </td>
                                                   <td>
-                                                          {{ticket?.cateasi.cnomusu}}
+                                                          {{ticket.cateasi!.ccodcat}}
                                                   </td>
                                                   <td class="py-1">
-                                                          {{ticket?.cdesasi.cnomusu}}
+
+                                                    {{ticket?.cateasi?.cnomusu}}
                                                   </td>
-                                                  
-                                                  
+                                                  <td class="py-1">
+
+                                                    {{ticket?.cdesasi?.cnomusu}}
+                                                  </td>
                                                   <td>
                                                     <label 
                                                     [ngStyle]="{'background-color':ticket.cpriori.cdesvar}"
@@ -288,40 +296,46 @@
                                                     {{ticket.cestado}}
                                                   </td>                                                                                                            
                                                   <td>
-                                                    <div class="progress" *ngIf="ticket.cestado === 'registrado'">
+                                                    <div class="progress" *ngIf="ticket?.cestado === 'registrado'">
                                                       <div class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="100"
                                                         aria-valuemin="0" aria-valuemax="100">
                                                       </div>
                                                     </div>
                             
-                                                    <div class="progress" *ngIf="ticket.cestado === 'asignado'">
+                                                    <div class="progress" *ngIf="ticket?.cestado === 'asignado'">
                                                       <div class="progress-bar bg-success" role="progressbar" style="width: 50%" aria-valuenow="100"
                                                         aria-valuemin="0" aria-valuemax="100">
                                                       </div>
                                                     </div>
-                                                    <div class="progress bordercustom" *ngIf="ticket.cestado === 'resuelto'">
+                                                    <div class="progress bordercustom" *ngIf="ticket?.cestado === 'resuelto'">
                                                       <div class="progress-bar bg-success " role="progressbar" style="width: 75%"
                                                         aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
                                                       </div>
                                                     </div>
-                                                    <div class="progress " *ngIf="ticket.cestado === 'terminado'">
+                                                    <div class="progress bordercustom" *ngIf="ticket.cestado === 'pendiente por devolver'">
+                                                      <div class="progress-bar bg-warning " role="progressbar" style="width: 75%"
+                                                        aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                                                      </div>
+                                                    </div>
+                                                    <div class="progress " *ngIf="ticket?.cestado === 'terminado'">
                                                       <div class="progress-bar bg-success " role="progressbar" style="width: 100%"
                                                         aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
                                                       </div>
                                                     </div>
-                                                    <div class="progress" *ngIf="ticket.cestado === 'devuelto'">
+                                                    <div class="progress" *ngIf="ticket?.cestado === 'devuelto'">
                                                       <div class="progress-bar bg-danger" role="progressbar" style="width: 100%" aria-valuenow="100"
                                                         aria-valuemin="0" aria-valuemax="100">
                                                       </div>
                                                     </div>
-                                                    <div class="progress" *ngIf="ticket.cestado === 'anulado'">
+                                                    <div class="progress" *ngIf="ticket?.cestado === 'anulado'">
                                                       <div class="progress-bar bg-danger" role="progressbar" style="width: 100%" aria-valuenow="100"
                                                         aria-valuemin="0" aria-valuemax="100">
                                                       </div>
                                                     </div>
                                                   </td>
                                                   <td>
-                                                    <i *ngIf="ticket.cestado === 'resuelto'" title="Terminar Ticket" class="mdi mdi-check color-succes" aria-hidden="true" (click)="abrirModalFin(ticket)"></i>
+                                                    <i *ngIf="ticket.cestado === 'resuelto'" title="Terminar Ticket" class="mdi mdi-check color-succes" aria-hidden="true" (click)="abrirModalFin(ticket,'terminar')"></i>
+                                                    <i *ngIf="ticket.cestado === 'pendiente por devolver'" title="devolver ticket" class="mdi mdi-keyboard-tab color-devolver" aria-hidden="true" (click)="abrirModalFin(ticket,'pendiente por devolver')"></i>
                                                     <i  title="Detalle" class="mdi mdi-view-list color-detalle" aria-hidden="true" (click)="abrirModalDetalle(ticket)" ></i>
                                                   </td>
                                                 </tr>
@@ -377,7 +391,7 @@
 
                                                   <label class="col-sm-3 col-form-label">Atencion al cliente :</label>
                                                   <div class="col-sm-9">
-                                                    <input type="text" class="form-control bordercustom" placeholder="El dia en numero" disabled value="{{detalle?.cateasi.cnomusu}}" >
+                                                    <input type="text" class="form-control bordercustom" placeholder="El dia en numero" disabled value="{{detalle?.cateasi?.cnomusu}}" >
                                                   </div>
                                                   <label class="col-sm-3 col-form-label">Dias permitidos : </label>
                                                   <div class="col-sm-9">
@@ -391,7 +405,7 @@
                                                   </div>
                                                   <label class="col-sm-3 col-form-label">Desarrollador Asignado : </label>
                                                   <div class="col-sm-9">
-                                                    <input type="text" class="form-control bordercustom" disabled value="{{detalle?.cdesasi.cnomusu}}" >
+                                                    <input type="text" class="form-control bordercustom" disabled value="{{detalle?.cdesasi?.cnomusu}}" >
                                                   </div>
                                                   
                                                   <label class="col-sm-3 col-form-label">Descripcion Desarrollo</label>
@@ -434,7 +448,7 @@
                           <div class="modal-dialog modal-lg">
                               <div class="modal-content">
                                   <div class="modal-header">
-                                      <h4 class="modal-title">Terminar Ticket</h4>
+                                      <h4 class="modal-title">{{tituloFormulario}} Ticket</h4>
                                       <button (click)="cerrarModal('terminar')" type="button" class="close"
                                           data-dismiss="modal" aria-label="Close">
                                           <span aria-hidden="true">×</span>
@@ -442,7 +456,7 @@
                                   </div>
                                   <div class="modal-bodyFin"> 
                                       <div class="card-body">
-                                              <form class="forms-sample" [formGroup]="ticketFinalizar!" (ngSubmit)="terminarTicket()" >
+                                              <form class="forms-sample" [formGroup]="ticketFinalizar!" (ngSubmit)="terminarTicket(tituloFormulario)" >
                                                 <div class="form-group row">
 
                                                   <label class="col-sm-3 col-form-label">Descripcion Final del Ticket</label>
@@ -454,7 +468,7 @@
                                                 </div>
                                                 <button type="submit" class="btn btn-primary btn-icon-text btnderecha">
                                                   <i class="mdi mdi-file-check btn-icon-prepend"></i>
-                                                  Terminar
+                                                  Guardar
 
                                                 </button>
                                                 <br>
